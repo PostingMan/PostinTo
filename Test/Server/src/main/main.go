@@ -29,7 +29,7 @@ func main() {
    
    defer dataHandle.Close()
 
-   /* handle client */
+   /* 创建通道 */
    syncChan := make(chan struct{}, 1)
    lAddr, err := net.ResolveUDPAddr("udp", "0.0.0.0:8848")
    if err != nil {
@@ -48,12 +48,14 @@ func main() {
    for {
       buf := make([]byte, 2048)
       n, rAddr, err := conn.ReadFromUDP(buf)
-      //fmt.Println(n, buf)
+
+      /* 并发 */
       go NewMessage(conn, n, rAddr, buf, err)
       if !Running {
       	syncChan <- struct{}{}
       	break
       }
+      
    }
    fmt.Println("Hello, World!")
 
