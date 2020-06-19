@@ -1,4 +1,5 @@
 import Felgo 3.0
+
 import QtQuick 2.12
 import Qt.labs.settings 1.1
 
@@ -10,6 +11,8 @@ App {
 
     id: root
     visible: true
+    width: 468
+    height: 832
 
     color: "white"
 
@@ -25,21 +28,26 @@ App {
 //        initialItem: pageLoader
 //        focus: true
 //    }
-//    NavigationStack {
-//        id: stack
-//        anchors.fill: parent
-//        initialPage: pageLoader
-//        focus: true
-//    }
-
-
-//    Loader {
-//        id: pageLoader
-//        sourceComponent: loginP
-//    }
-    LoginPage {
-        visible: true
+    NavigationStack {
+        splitView: app.tablet && app.landscape
+        id: stack
+        anchors.fill: parent
+        initialPage: pageLoader
+        focus: true
     }
+
+
+    Loader {
+        id: pageLoader
+        sourceComponent: mainP
+    }
+//    LoginPage {
+//        visible: true
+//    }
+
+//    MainPage {
+//        visible: true
+//    }
 
 
     Connections{

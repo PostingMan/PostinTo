@@ -1,125 +1,119 @@
+import Felgo 3.0
 import QtQuick 2.12
-import QtQuick.Controls 2.12
+import QtQuick.Controls 2.12 /* TextField */
+import QtQuick.Layouts 1.12
+
 Page {
     id: mainP
+    title: qsTr("Main Page")
     
     //bk
-    Rectangle {
-        anchors.fill: parent
-        color: "white"
-    }
-    
-    //昨日秃头冠军
-    Rectangle {
+//    Rectangle {
+//        anchors.fill: parent
+//        color: "white"
+//    }
 
-        id: user
-        width: dp(10)
-        height: width
-        radius: width / 2
-        color: "blue"
-        anchors {
-            top: parent.top
-            left: parent.left
-            margins: dp(4.5)
-        }
-
-        Text {
-            text: userName[0]//JSON.stringify(userName)[0]
-            anchors.centerIn: parent;
-            font {
-                family: tintFnt
-                pixelSize: dp(6)
-                bold: true
-            }
-            color: "black"
-        }
-    }
-    
-    //will be 秃头冠军 按钮
+    /* header */
     Rectangle {
+        anchors.top: parent.top
+        anchors.topMargin: 68
+        width: parent.width
+        height: dp(65)
+        color: Theme.colors.tintLightColor
+        //z: 10
 
-        id: beChampion
-        anchors.left: user.right
-        anchors.verticalCenter: user.verticalCenter
-        anchors.margins: dp(5)
-        height: dp(10)
-        width: championTxt.width + dp(4)
-        radius: dp(1.5)
-        color: "#1C86EE"
-        Text {
-            id: championTxt
+        RowLayout {
+            width: parent.width
             anchors.centerIn: parent
-            text: qsTr("我要变强👆")
-            font.pixelSize: parent.height * 0.4
-            font.bold: true
-        }
-        MouseArea {
-            anchors.fill: parent
-            onPressed: beChampion.color = "#00BFFF"
-            onReleased: beChampion.color = "#1C86EE"
-            onClicked: {
-                root.showMask()
-                setChampion.createObject(root)
+
+            //昨日秃头冠军
+            Rectangle {
+                id: user
+                width: dp(35)
+                height: width
+                radius: width / 2
+                color: "#00838F"
+
+                anchors {
+//                    top: parent.top
+                    left: parent.left
+                    margins: dp(6.5)
+                }
+
+                Text {
+                    text: userName[0]//JSON.stringify(userName)[0]
+                    anchors.centerIn: parent;
+                    font {
+                        family: tintFnt
+                        pixelSize: dp(15)
+                        bold: true
+                    }
+                    color: "#FFFFFF"
+                }
+            }
+
+            AppButton {
+                id: beChampion
+                text: "want C"
+
+                onClicked: {
+                    root.showMask()
+                    setChampion.createObject(root)
+                }
+
+            }
+
+            AppButton {
+                id: seeChampion
+                text: "Y C"
+                onClicked: {
+                    root.showMask()
+                    championPage.createObject(root)
+                }
+
             }
         }
+
     }
-    
-    //昨日大佬 按钮
-    Rectangle {
-        id: seeChampion
-        anchors{
-            left: beChampion.right
-            right: parent.right
-            verticalCenter: beChampion.verticalCenter
-            margins: dp(3)
-        }
-        color: "#EEAEEE"
-        height: dp(10)
-        width: championView.width + dp(4)
-        radius: dp(1.5)
-        Text {
-            id: championView
-            anchors.centerIn: parent
-            text: qsTr("昨日大佬👆")
-            font.pixelSize: parent.height * 0.4
-            font.bold: true
-        }
-        MouseArea {
-            anchors.fill: parent
-            onPressed: seeChampion.color = "#EED2EE"
-            onReleased: seeChampion.color = "#EEAEEE"
-            onClicked: {
-                root.showMask()
-                championPage.createObject(root)
-            }
-        }
-    }
-    
+
+
     Rectangle {
         id: listRec
         anchors.centerIn: parent
+        width: parent.width * 0.7
+        height: parent.height * 0.5
         color: "#555555"
         opacity: 0
+//        Text {
+//            text: qsTr("some rooms ...")
+//            color: "white"
+//            anchors.top: parent.top
+//            anchors.horizontalCenter: parent.horizontalCenter
+
+//        }
+
+
         ParallelAnimation {
             id: create;
             PropertyAnimation {
                 target: listRec
                 property: "height";
-                to: parent.height * 0.8
+                to: parent.height * 0.6
                 duration: 325
                 easing.type: Easing.InQuart
             }
             PropertyAnimation {
                 target: listRec
                 property: "width";
-                to: dp(90)
+                to: parent.width * 0.85
+
                 duration: 325
                 easing.type: Easing.OutQuart
             }
             PropertyAnimation {
                 target: listRec
                 property: "radius"
-                to: dp(5)
+                to: dp(10)
                 duration: 325
             }
             PropertyAnimation {
@@ -135,14 +129,14 @@ Page {
         ListView {
             id: roomList
             anchors.centerIn: parent
-            width: parent.width * 0.9
-            height: parent.height * 0.95
-            
+            width: dp(150)
+            height: parent.height * 0.55
+
             model: ListModel{
                 id: roomodel
             }
             clip: true
-            spacing: dp(3)
+            spacing: dp(6)
             delegate: Rectangle {
                 property var roomCod: modelData
                 width: parent.width
@@ -151,7 +145,7 @@ Page {
                 radius: 5
                 Text {
                     anchors.centerIn: parent
-                    text: "【" + parent.roomCod + "】"
+                    text: "[" + parent.roomCod + "]"
                     font.family: "Agency FB Negreta"
                     font.pixelSize: parent.height * 0.6
                 }
@@ -167,13 +161,12 @@ Page {
     Image {
         id: flash
         source: "../assets/mdpi/ucrop_ic_rotate.png"
-        width: dp(8)
-        //height: dp(8)
+        width: dp(15)
         fillMode: Image.PreserveAspectFit
         anchors {
             right: listRec.right
             bottom: listRec.bottom
-            margins: dp(4)
+            margins: dp(6)
         }
         PropertyAnimation {
             id: flashAni
@@ -205,75 +198,96 @@ Page {
         repeat: flashAni.running
         onTriggered: if(flashAni.running) backend.send_message_test("1007")
     }
-    
-    TextField {
-        id: input
-        width: dp(50)
-        height: dp(8)
-        anchors {
-            bottom: parent.bottom
-            bottomMargin: dp(4)
-            left: parent.left
-            leftMargin: dp(6)
+
+    RowLayout {
+        width: parent.width
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 30
+        spacing: 10
+
+
+        AppTextField {
+            id: input
+            width: parent.width * 0.4
+
+
         }
-        background: Rectangle{color:"yellow"; radius: 5}
-        font.pixelSize: dp(5)
-        font.family: "Microsoft YaHei UI"
-        font.bold: false
-        color: "black"
-        placeholderText: "  请输入房间ID"
-        placeholderTextColor: "black"
-    }
-    
-    Rectangle {
-        height: dp(8)
-        width: dp(25)
-        radius: 5
-        anchors {
-            bottom: parent.bottom
-            bottomMargin: dp(4)
-            right: parent.right
-            rightMargin: dp(6)
-        }
-        color: "#F95"
-        Text {
-            text: qsTr("创建/进入")
-            font {
-                family: "Microsoft YaHei UI"
-                bold: false
-                pixelSize: dp(5)
-            }
-            anchors.centerIn: parent
-        }
-        MouseArea {
-            anchors.fill: parent
-            onPressed: parent.color = "#F70"
-            onReleased: parent.color = "#F95"
-            onClicked: {
-                var pd = false
-                for(var dat in roomList.model) {
-                    if(input.text === roomList.model[dat]){
-                        pd = true
-                        break
-                    }
-                }
-                if(pd) {
-                    input.focus = false
-                    backend.send_message_test("1005" + input.text + "/" + userId)
-                    root.pushStack(0)
-                    stack.currentItem.roomCode = input.text
-                    input.text = ""
-                }
-                else {
-                    input.focus = false
-                    backend.send_message_test("1003" + input.text + "/" + userId)
-                    root.pushStack(0)
-                    stack.currentItem.roomCode = input.text
-                    input.text = ""
-                }
-            }
+
+        AppButton {
+
+
         }
     }
+    
+//    TextField {
+//        id: input
+//        width: dp(50)
+//        height: dp(8)
+//        anchors {
+//            bottom: parent.bottom
+//            bottomMargin: dp(4)
+//            left: parent.left
+//            leftMargin: dp(6)
+//        }
+//        background: Rectangle{color:"yellow"; radius: 5}
+//        font.pixelSize: dp(5)
+//        font.family: "Microsoft YaHei UI"
+//        font.bold: false
+//        color: "black"
+//        placeholderText: "  请输入房间ID"
+//        placeholderTextColor: "black"
+//    }
+    
+
+//    Rectangle {
+//        height: dp(8)
+//        width: dp(25)
+//        radius: 5
+//        anchors {
+//            bottom: parent.bottom
+//            bottomMargin: dp(4)
+//            right: parent.right
+//            rightMargin: dp(6)
+//        }
+//        color: "#F95"
+//        Text {
+//            text: qsTr("创建/进入")
+//            font {
+//                family: "Microsoft YaHei UI"
+//                bold: false
+//                pixelSize: dp(5)
+//            }
+//            anchors.centerIn: parent
+//        }
+//        MouseArea {
+//            anchors.fill: parent
+//            onPressed: parent.color = "#F70"
+//            onReleased: parent.color = "#F95"
+//            onClicked: {
+//                var pd = false
+//                for(var dat in roomList.model) {
+//                    if(input.text === roomList.model[dat]){
+//                        pd = true
+//                        break
+//                    }
+//                }
+//                if(pd) {
+//                    input.focus = false
+//                    backend.send_message_test("1005" + input.text + "/" + userId)
+//                    root.pushStack(0)
+//                    stack.currentItem.roomCode = input.text
+//                    input.text = ""
+//                }
+//                else {
+//                    input.focus = false
+//                    backend.send_message_test("1003" + input.text + "/" + userId)
+//                    root.pushStack(0)
+//                    stack.currentItem.roomCode = input.text
+//                    input.text = ""
+//                }
+//            }
+//        }
+//    }
     
     Component {
         id: championPage

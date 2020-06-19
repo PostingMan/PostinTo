@@ -33,15 +33,6 @@ Page {
         width: dp(256)
 
 
-//        EditText {
-//            id: userCode;
-//            width: parent.width;
-//            height: dp(30);
-//            icon: "../../assets/mdpi/ic_login_code.png";
-//            placeholderText: "Pos ID";
-
-//            validator: RegExpValidator {regExp: /^[0-9]*$/}
-//        }
         AppTextField {
             id: userCode
             width: parent.width
@@ -61,16 +52,6 @@ Page {
 
         }
 
-        //昵称
-//        EditText {
-//            id: userId;
-//            width: parent.width;
-//            height: dp(30);
-//            icon: "../../assets/mdpi/ic_login_user.png";
-//            placeholderText: "Pos Nickname";
-
-//            validator: RegExpValidator {regExp: /^\w*$/}
-//        }
 
         AppTextField {
             id: userPsw
@@ -82,16 +63,6 @@ Page {
 
         }
 
-        //密码
-//        EditText {
-//            id: userPsw;
-//            width: parent.width;
-//            height: dp(30);
-//            icon: "../../assets/mdpi/ic_login_psw.png";
-//            placeholderText: "Password";
-//            validator: RegExpValidator {regExp: /^\w*$/}  //限制输入类型的正则式
-//            echoMode: TextInput.Password; //设定输入模式为密码
-//        }
     }
 
 
