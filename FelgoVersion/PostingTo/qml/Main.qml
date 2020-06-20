@@ -22,12 +22,6 @@ App {
     property var userId
     property var userName
 
-//    StackView {
-//        id: stack
-//        anchors.fill: parent
-//        initialItem: pageLoader
-//        focus: true
-//    }
     NavigationStack {
         id: stack
         anchors.fill: parent

@@ -8,20 +8,20 @@ Page {
     property alias _title:_title.text
     property var roomCode
 
-    background: Rectangle {color: "white"}
+    background: Rectangle {color: "#40C4FF"}
     
     //顶栏
     header: Rectangle{
         anchors.top: parent.top
-        anchors.topMargin: dp(50)
+        anchors.topMargin: dp(70)
 
-        color: "#039BE5"
+        color: "#40C4FF"
         width: parent.width
         height: dp(50)
         Text {
             id: _title
             anchors.centerIn: parent
-            text: "No." + roomCode
+            text: "🌖  " + roomCode
             color: "#4b2e2b"
             font.pixelSize: dp(20)
             font.family: tintFnt
@@ -31,7 +31,7 @@ Page {
         Image {
             id: popIco
             source: "../../assets/mdpi/ic_arrow_back.png"
-            height: parent.height * 0.6
+            height: parent.height * 0.8
             anchors{
                 left: parent.left
                 leftMargin: dp(3)
@@ -159,20 +159,20 @@ Page {
         height: Math.min(Math.max(dp(8), text.height), text.height * 6);
         anchors {
             bottom: parent.bottom
-            bottomMargin: dp(3.5)
+            bottomMargin: dp(8)
             left: parent.left
             leftMargin: dp(6)
         }
         background: Rectangle {color: "#eeeeee"; radius: dp(2)}
-        font.pixelSize: dp(15)
+        font.pixelSize: dp(20)
     }
 
     AppButton {
         anchors{
             right: parent.right
             bottom: parent.bottom
-            rightMargin: dp(4)
-            bottomMargin: dp(4.2)
+            rightMargin: dp(6)
+            bottomMargin: dp(6)
         }
         width: parent.width * 0.2
         radius: dp(3)
@@ -190,8 +190,9 @@ Page {
             text: qsTr("SEND")
             font.family: tintFnt
             font.pixelSize: dp(14)
-            color: "white"
+            color: "black"
         }
+        backgroundColor: "#EEFF41"
 
     }
 

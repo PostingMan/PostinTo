@@ -15,12 +15,13 @@ Page {
 
     /* header */
     Rectangle {
-        anchors.top: parent.top
-        anchors.topMargin: 68
+//        anchors.top: parent.top
+//        anchors.topMargin: dp(60)
+        anchors.bottom: listRec.top
+        anchors.bottomMargin: dp(15)
         width: parent.width
         height: dp(65)
-        color: Theme.colors.tintLightColor
-        //z: 10
+        color: "white" /*Theme.colors.tintLightColor*/
 
         RowLayout {
             width: parent.width
@@ -92,7 +93,6 @@ Page {
 
         }
 
-
         ParallelAnimation {
             id: create;
             PropertyAnimation {
@@ -161,7 +161,7 @@ Page {
     Image {
         id: flash
         source: "../../assets/mdpi/ucrop_ic_rotate.png"
-        width: dp(15)
+        width: dp(30)
         fillMode: Image.PreserveAspectFit
         anchors {
             right: listRec.right
@@ -202,12 +202,8 @@ Page {
     RowLayout {
         width: parent.width
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 30
-        spacing: 10
-
-
-
-
+        anchors.bottomMargin: dp(30)
+        spacing: dp(5)
 
         AppTextField {
             id: input
@@ -219,11 +215,10 @@ Page {
             placeholderTextColor: "gray"
 
         }
-
         AppButton {
             anchors.right: parent.right
             anchors.rightMargin: dp(20)
-            radius: 8
+            radius:dp(5)
 
             text: qsTr("Go/join-in")
 
@@ -239,7 +234,7 @@ Page {
                     input.focus = false
                     backend.send_message_test("1005" + input.text + "/" + userId)
                     root.pushStack(0)
-                    stack.currentItem.roomCode = input.text
+                    stack.currentPage.roomCode = input.text
                     input.text = ""
                 }
                 else {
@@ -494,8 +489,7 @@ Page {
         flash.rotation = 0
         input.focus = false
         root.pushStack(0)
-        
-        stack.currentItem.roomCode = data
+        stack.currentPage.roomCode = data
         backend.send_message_test("1005" + data + "/" + userId)
     }
 }

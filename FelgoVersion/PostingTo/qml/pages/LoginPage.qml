@@ -6,10 +6,13 @@ import "../components"
 Page {
     id: loginPage
 
+
     Column {
+        id: header
+        visible: true
         anchors {
-            top: parent.top
-            topMargin: 80
+            bottom: mid.top
+            bottomMargin: dp(30)
             horizontalCenter: parent.horizontalCenter
         }
         spacing: dp(5)
@@ -27,6 +30,8 @@ Page {
     }
 
     Column {
+
+        id: mid
 
         anchors.centerIn: parent
         spacing: dp(15)
