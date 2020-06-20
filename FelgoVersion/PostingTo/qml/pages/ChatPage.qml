@@ -152,182 +152,49 @@ Page {
         }
     }
     
-//    TextArea {
-//        id: input
-//        width: dp(75)
-//        height: Math.min(Math.max(dp(8), text.height), text.height * 6);
-//        anchors {
-//            bottom: parent.bottom
-//            bottomMargin: dp(3.5)
-//            left: parent.left
-//            leftMargin: dp(6)
-//        }
-//        background: Rectangle {color: "#eeeeee"; radius: dp(2)}
-//        font.pixelSize: dp(4)
-//    }
 
-
-//    AppTextEdit {
-//        id: input
-//        width: parent.width * 0.7
-//        height: Math.min(Math.max(dp(8), text.height), text.height * 6)
-//        anchors {
-//            bottom: parent.bottom
-//            bottomMargin: dp(3.5)
-//            left: parent.left
-//            leftMargin: dp(6)
-//        }
-
-//    }
     TextArea {
-            id: input
-            width: dp(75)
-            height: Math.min(Math.max(dp(8), text.height), text.height * 6);
-            anchors {
-                bottom: parent.bottom
-                bottomMargin: dp(3.5)
-                left: parent.left
-                leftMargin: dp(6)
+        id: input
+        width: parent.width * 0.7
+        height: Math.min(Math.max(dp(8), text.height), text.height * 6);
+        anchors {
+            bottom: parent.bottom
+            bottomMargin: dp(3.5)
+            left: parent.left
+            leftMargin: dp(6)
+        }
+        background: Rectangle {color: "#eeeeee"; radius: dp(2)}
+        font.pixelSize: dp(15)
+    }
+
+    AppButton {
+        anchors{
+            right: parent.right
+            bottom: parent.bottom
+            rightMargin: dp(4)
+            bottomMargin: dp(4.2)
+        }
+        width: parent.width * 0.2
+        radius: dp(3)
+        height: input.height
+        onClicked: {
+            if (input.text != ""){
+                send2server()
+                input.focus = false
             }
-            background: Rectangle {color: "#eeeeee"; radius: dp(2)}
-            font.pixelSize: dp(4)
+            else
+                root.showChip("消息为空!")
+        }
+        Text {
+            anchors.centerIn: parent
+            text: qsTr("SEND")
+            font.family: tintFnt
+            font.pixelSize: dp(14)
+            color: "white"
         }
 
-        Rectangle {
-            anchors{
-                right: parent.right
-                bottom: parent.bottom
-                rightMargin: dp(4)
-                bottomMargin: dp(4.2)
-            }
-            width: dp(10)
-            radius: dp(3)
-            height: dp(8)
-            color: "#FABC04"
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    if (input.text != ""){
-                        send2server()
-                        input.focus = false
-                    }
-                    else
-                        root.showChip("消息为空!")
-                }
-            }
-            Text {
-                anchors.centerIn: parent
-                text: qsTr("发送")
-                font.family: tintFnt
-                color: "black"
-            }
-        }
+    }
 
-
-    
-
-    /* footer */
-//    Rectangle {
-//        width: parent.width
-//        height: dp(50)
-//        color: "white"
-//        anchors.bottom: parent.bottom
-//        anchors.leftMargin: 10
-//        anchors.horizontalCenter: parent.horizontalCenter
-
-//        RowLayout {
-//            width: parent.width
-//            anchors {
-//                bottom: parent.bottom
-//                bottomMargin: dp(3.5)
-//                centerIn: parent
-
-//            }
-//            spacing: dp(10)
-
-//            TextArea {
-//                id: input
-//                width: 200
-
-//                height: Math.min(Math.max(dp(8), text.height), text.height * 6);
-//                anchors {
-////                    bottom: parent.bottom
-////                    bottomMargin: dp(3.5)
-//                    left: parent.left
-//                    leftMargin: dp(10)
-//                }
-//                background: Rectangle {color: "#eeeeee"; radius: dp(2);}
-//                font.pixelSize: dp(20)
-//            }
-//            AppTextEdit {
-//                id: input
-//                width: 200
-//                height: Math.min(Math.max(dp(8), text.height), text.height * 6);
-//                anchors {
-//                    //                    bottom: parent.bottom
-//                    //                    bottomMargin: dp(3.5)
-//                    left: parent.left
-//                    leftMargin: dp(10)
-//                }
-
-//            }
-
-//            AppButton {
-//                anchors {
-//                    right: parent.right
-//                    rightMargin: dp(3.5)
-
-//                }
-//                width: parent.width * 0.2
-//                radius: dp(8)
-//                text: qsTr("SEND")
-
-//                onClicked: {
-//                    if (input.text != ""){
-
-//                        send2server()
-//                        root.showChip("suc")
-//                        input.focus = false
-//                    }
-//                    else
-//                        root.showChip("消息为空!")
-//                }
-
-//            }
-
-//        }
-
-//    }
-
-//    Rectangle {
-//            anchors{
-//                right: parent.right
-//                bottom: parent.bottom
-//                rightMargin: dp(4)
-//                bottomMargin: dp(4.2)
-//            }
-//            width: dp(10)
-//            radius: dp(3)
-//            height: dp(8)
-//            color: "#FABC04"
-//            MouseArea {
-//                anchors.fill: parent
-//                onClicked: {
-//                    if (input.text != ""){
-//                        send2server()
-//                        input.focus = false
-//                    }
-//                    else
-//                        root.showChip("消息为空!")
-//                }
-//            }
-//            Text {
-//                anchors.centerIn: parent
-//                text: qsTr("发送")
-//                font.family: tintFnt
-//                color: "black"
-//            }
-//        }
 
     
     Connections {
