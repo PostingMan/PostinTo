@@ -13,11 +13,12 @@ Page {
     //顶栏
     header: Rectangle{
         anchors.top: parent.top
-        anchors.topMargin: dp(70)
+        anchors.topMargin: dp(80)
 
-        color: "#40C4FF"
+
+        color:  "#40C4FF"
         width: parent.width
-        height: dp(50)
+        height: dp(60)
         Text {
             id: _title
             anchors.centerIn: parent
@@ -57,12 +58,13 @@ Page {
         id: view
         anchors{
             top: parent.top
-            topMargin: dp(70)
+            topMargin: dp(85)
             bottom: input.top
             bottomMargin: dp(4)
             horizontalCenter: parent.horizontalCenter
         }
-        width: dp(250)
+
+        width: dp(350)
         clip: true
         model: ListModel {
             id: listmode
@@ -74,33 +76,18 @@ Page {
             NumberAnimation { properties: "scale"; from: 0; to: 1; duration: 200; easing.type: Easing.InQuart }
           }
         }
-//        addDisplaced: Transition {
-//          NumberAnimation { properties: "x,y"; duration: 100 }
-//        }
-//        remove: Transition {
-//          id: removeTransition;
-//          property real targetY: 0
-//          ParallelAnimation {
-//            NumberAnimation { property: "opacity"; to: 0; duration: 400 }//easing: Easing.OutQuint}
-//            NumberAnimation { properties: "scale"; to: 0; duration: 400 }
-//            NumberAnimation { id: yAnim; property: "y"; to: removeTransition.targetY; duration: 400 }
-//          }
-//        }
-//        removeDisplaced: Transition {
-//          NumberAnimation { properties: "x,y"; duration: 400 }
-//        }
-        
+
         delegate: Column {
             id: column
             anchors.right: sentByMe ? parent.right : undefined
             anchors.rightMargin: sentByMe ? 20 : undefined
-            spacing: dp(3)
+            spacing: dp(6)
             
             readonly property bool sentByMe: model.flag === "Y"
 
             Row {
                 id: messageRow
-                spacing: dp(1.3)
+                spacing: dp(3)
                 anchors.right: sentByMe ? parent.right : undefined
                 anchors.left: sentByMe ? undefined : parent.left
                 anchors.leftMargin: dp(3)
@@ -124,7 +111,7 @@ Page {
                                0.6 * (view.width - avatar.width - messageRow.spacing))
                     height: messageText.implicitHeight + dp(5)
                     color: sentByMe ? "lightgrey" : "steelblue"
-                    radius: dp(2.1)
+                    radius: dp(5)
                     Label {
                         id: messageText
                         text: content
