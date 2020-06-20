@@ -1,26 +1,33 @@
+import Felgo 3.0
 import QtQuick 2.0
 import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
 
 Page {
     id: chatP
     property alias _title:_title.text
     property var roomCode
-    
 
+    background: Rectangle {color: "#039BE5"}
+    
     //顶栏
     header: Rectangle{
+        anchors.top: parent.top
+        anchors.topMargin: dp(50)
 
         color: "#039BE5"
         width: parent.width
-        height: dp(15)
+        height: dp(50)
         Text {
             id: _title
             anchors.centerIn: parent
             text: "No." + roomCode
             color: "#4b2e2b"
-            font.pixelSize: dp(4)
+            font.pixelSize: dp(20)
             font.family: tintFnt
         }
+
+        /* 退出按钮 */
         Image {
             id: popIco
             source: "../../assets/mdpi/ic_arrow_back.png"
@@ -40,10 +47,10 @@ Page {
                     backend.send_message_test("1007")
                 }
             }
-        }//退出按钮
+        }
         
     }
-    background: Rectangle {color: "#455A64"}
+
     
 
     ListView {
@@ -145,51 +152,95 @@ Page {
         }
     }
     
-    TextArea {
-        id: input
-        width: dp(75)
-        height: Math.min(Math.max(dp(8), text.height), text.height * 6);
-        anchors {
-            bottom: parent.bottom
-            bottomMargin: dp(3.5)
-            left: parent.left
-            leftMargin: dp(6)
-        }
-        background: Rectangle {color: "#eeeeee"; radius: dp(2)}
-        font.pixelSize: dp(4)
-    }
-    
-    //发送按钮
-    Rectangle {
-        anchors{
-            right: parent.right
-            bottom: parent.bottom
-            rightMargin: dp(4)
-            bottomMargin: dp(4.2)
-        }
-        width: dp(10)
-        radius: dp(3)
-        height: dp(8)
-        color: "#FABC04"
-        MouseArea {
-            anchors.fill: parent
-            onClicked: {
-                if (input.text != ""){
+//    TextArea {
+//        id: input
+//        width: dp(75)
+//        height: Math.min(Math.max(dp(8), text.height), text.height * 6);
+//        anchors {
+//            bottom: parent.bottom
+//            bottomMargin: dp(3.5)
+//            left: parent.left
+//            leftMargin: dp(6)
+//        }
+//        background: Rectangle {color: "#eeeeee"; radius: dp(2)}
+//        font.pixelSize: dp(4)
+//    }
 
-                    send2server()
-                    input.focus = false
-                }
-                else
-                    root.showChip("消息为空!")
+
+//    AppTextEdit {
+//        id: input
+//        width: parent.width * 0.7
+//        height: Math.min(Math.max(dp(8), text.height), text.height * 6)
+//        anchors {
+//            bottom: parent.bottom
+//            bottomMargin: dp(3.5)
+//            left: parent.left
+//            leftMargin: dp(6)
+//        }
+
+//    }
+    
+
+    /* footer */
+    Rectangle {
+        width: parent.width
+        height: dp(50)
+        color: "#039BE5"
+        anchors.bottom: parent.bottom
+        anchors.leftMargin: 10
+        anchors.horizontalCenter: parent.horizontalCenter
+
+        RowLayout {
+            width: parent.width
+            anchors {
+//                bottom: parent.bottom
+//                bottomMargin: dp(3.5)
+                centerIn: parent
+
             }
+            spacing: dp(10)
+
+            TextArea {
+                id: input
+                width: 200
+
+                height: Math.min(Math.max(dp(8), text.height), text.height * 6);
+                anchors {
+//                    bottom: parent.bottom
+//                    bottomMargin: dp(3.5)
+                    left: parent.left
+                    leftMargin: dp(10)
+                }
+                background: Rectangle {color: "#eeeeee"; radius: dp(2);}
+                font.pixelSize: dp(20)
+            }
+
+            AppButton {
+                anchors {
+                    right: parent.right
+                    rightMargin: dp(3.5)
+
+                }
+                width: parent.width * 0.2
+                radius: dp(8)
+                text: qsTr("SEND")
+
+                onClicked: {
+                    if (input.text != ""){
+
+                        send2server()
+                        input.focus = false
+                    }
+                    else
+                        root.showChip("消息为空!")
+                }
+
+            }
+
         }
-        Text {
-            anchors.centerIn: parent
-            text: qsTr("发送")
-            font.family: tintFnt
-            color: "black"
-        }
+
     }
+
     
     Connections {
         target: root

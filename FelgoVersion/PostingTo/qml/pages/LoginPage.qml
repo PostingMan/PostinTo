@@ -9,7 +9,7 @@ Page {
     Column {
         anchors {
             top: parent.top
-            topMargin: 40
+            topMargin: 80
             horizontalCenter: parent.horizontalCenter
         }
         spacing: dp(5)
@@ -87,7 +87,7 @@ Page {
             radius: dp(5)
             text: "sign up"
             onClicked: {
-                handleLogin()
+                handleSignIn()
             }
         }
     }

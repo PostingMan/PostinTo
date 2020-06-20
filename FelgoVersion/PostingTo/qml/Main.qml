@@ -39,15 +39,8 @@ App {
 
     Loader {
         id: pageLoader
-        sourceComponent: mainP
+        sourceComponent: loginP
     }
-//    LoginPage {
-//        visible: true
-//    }
-
-//    MainPage {
-//        visible: true
-//    }
 
 
     Connections{

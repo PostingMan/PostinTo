@@ -84,13 +84,13 @@ Page {
         height: parent.height * 0.5
         color: "#555555"
         opacity: 0
-//        Text {
-//            text: qsTr("some rooms ...")
-//            color: "white"
-//            anchors.top: parent.top
-//            anchors.horizontalCenter: parent.horizontalCenter
+        Text {
+            text: qsTr("some rooms ...")
+            color: "white"
+            anchors.top: parent.top
+            anchors.horizontalCenter: parent.horizontalCenter
 
-//        }
+        }
 
 
         ParallelAnimation {
@@ -129,7 +129,7 @@ Page {
         ListView {
             id: roomList
             anchors.centerIn: parent
-            width: dp(150)
+            width: dp(200)
             height: parent.height * 0.55
 
             model: ListModel{
@@ -140,7 +140,7 @@ Page {
             delegate: Rectangle {
                 property var roomCod: modelData
                 width: parent.width
-                height: dp(10)
+                height: dp(25)
                 color: "white"
                 radius: 5
                 Text {
@@ -160,7 +160,7 @@ Page {
     
     Image {
         id: flash
-        source: "../assets/mdpi/ucrop_ic_rotate.png"
+        source: "../../assets/mdpi/ucrop_ic_rotate.png"
         width: dp(15)
         fillMode: Image.PreserveAspectFit
         anchors {
@@ -186,7 +186,7 @@ Page {
                 flashAni.start()
                 timeOutT.start()
                 backend.send_message_test("1007")
-                root.showChip("刷新中~")
+                root.showChip("刷新中")
                 roomodel.clear()
             }
         }
@@ -208,86 +208,50 @@ Page {
 
         AppTextField {
             id: input
-            width: parent.width * 0.4
+            width: listRec.width * 0.5
+            anchors.left: parent.left
+            anchors.leftMargin: dp(30)
+
+            placeholderText: "请输入房间ID"
+            placeholderTextColor: "gray"
+
 
 
         }
 
         AppButton {
+            anchors.right: parent.right
+            anchors.rightMargin: dp(20)
+            radius: 8
 
+            text: qsTr("Go/join-in")
+
+            onClicked: {
+                var pd = false
+                for(var dat in roomList.model) {
+                    if(input.text === roomList.model[dat]){
+                        pd = true
+                        break
+                    }
+                }
+                if(pd) {
+                    input.focus = false
+                    backend.send_message_test("1005" + input.text + "/" + userId)
+                    root.pushStack(0)
+                    stack.currentItem.roomCode = input.text
+                    input.text = ""
+                }
+                else {
+                    input.focus = false
+                    backend.send_message_test("1003" + input.text + "/" + userId)
+                    root.pushStack(0)
+                    stack.currentItem.roomCode = input.text
+                    input.text = ""
+                }
+            }
 
         }
     }
-    
-//    TextField {
-//        id: input
-//        width: dp(50)
-//        height: dp(8)
-//        anchors {
-//            bottom: parent.bottom
-//            bottomMargin: dp(4)
-//            left: parent.left
-//            leftMargin: dp(6)
-//        }
-//        background: Rectangle{color:"yellow"; radius: 5}
-//        font.pixelSize: dp(5)
-//        font.family: "Microsoft YaHei UI"
-//        font.bold: false
-//        color: "black"
-//        placeholderText: "  请输入房间ID"
-//        placeholderTextColor: "black"
-//    }
-    
-
-//    Rectangle {
-//        height: dp(8)
-//        width: dp(25)
-//        radius: 5
-//        anchors {
-//            bottom: parent.bottom
-//            bottomMargin: dp(4)
-//            right: parent.right
-//            rightMargin: dp(6)
-//        }
-//        color: "#F95"
-//        Text {
-//            text: qsTr("创建/进入")
-//            font {
-//                family: "Microsoft YaHei UI"
-//                bold: false
-//                pixelSize: dp(5)
-//            }
-//            anchors.centerIn: parent
-//        }
-//        MouseArea {
-//            anchors.fill: parent
-//            onPressed: parent.color = "#F70"
-//            onReleased: parent.color = "#F95"
-//            onClicked: {
-//                var pd = false
-//                for(var dat in roomList.model) {
-//                    if(input.text === roomList.model[dat]){
-//                        pd = true
-//                        break
-//                    }
-//                }
-//                if(pd) {
-//                    input.focus = false
-//                    backend.send_message_test("1005" + input.text + "/" + userId)
-//                    root.pushStack(0)
-//                    stack.currentItem.roomCode = input.text
-//                    input.text = ""
-//                }
-//                else {
-//                    input.focus = false
-//                    backend.send_message_test("1003" + input.text + "/" + userId)
-//                    root.pushStack(0)
-//                    stack.currentItem.roomCode = input.text
-//                    input.text = ""
-//                }
-//            }
-//        }
-//    }
     
     Component {
         id: championPage
@@ -303,10 +267,12 @@ Page {
             
             Image {
                 id: img
-                source: "../assets/champion.jpg"
+                source: "../../assets/champion.jpg"
                 anchors.verticalCenter: parent.verticalCenter
                 fillMode: Image.PreserveAspectFit
                 opacity: 0
+
+                /* frog avat */
                 Rectangle {
                     anchors {
                         right: parent.right
@@ -329,10 +295,12 @@ Page {
                         y: -dp(5)
                         width: parent.width * 0.8
                         fillMode: Image.PreserveAspectFit
-                        source: "../assets/ic_tg.png"
+                        source: "../../assets/ic_tg.png"
                         rotation: -45
                     }
                 }
+
+                /* boss says */
                 Rectangle {
                     color: "#DDA0DD"
                     width: parent.width * 0.6
@@ -435,7 +403,7 @@ Page {
             }
             Image {
                 id: img
-                source: "../assets/beChampion.jpg"
+                source: "../../assets/beChampion.jpg"
                 anchors.verticalCenter: parent.verticalCenter
                 fillMode: Image.PreserveAspectFit
                 opacity: 0

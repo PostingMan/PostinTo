@@ -4,8 +4,8 @@ import QtQuick 2.12
 Rectangle {
 
     id: chip;
-    width: txt.width + dp(8);
-    height: txt.height + dp(6);
+    width: txt.width + dp(15);
+    height: txt.height + dp(20);
     anchors.horizontalCenter: parent.horizontalCenter;
     anchors.bottom: parent.bottom;
     anchors.bottomMargin: dp(20);
