@@ -206,6 +206,9 @@ Page {
         spacing: 10
 
 
+
+
+
         AppTextField {
             id: input
             width: listRec.width * 0.5
@@ -214,8 +217,6 @@ Page {
 
             placeholderText: "请输入房间ID"
             placeholderTextColor: "gray"
-
-
 
         }
 
@@ -245,7 +246,8 @@ Page {
                     input.focus = false
                     backend.send_message_test("1003" + input.text + "/" + userId)
                     root.pushStack(0)
-                    stack.currentItem.roomCode = input.text
+                    stack.currentPage.roomCode = input.text
+                    //stack.currentItem.roomCode = input.text
                     input.text = ""
                 }
             }

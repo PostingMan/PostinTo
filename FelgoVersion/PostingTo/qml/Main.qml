@@ -29,7 +29,6 @@ App {
 //        focus: true
 //    }
     NavigationStack {
-        splitView: app.tablet && app.landscape
         id: stack
         anchors.fill: parent
         initialPage: pageLoader
@@ -85,17 +84,14 @@ App {
         property string psw
     }
 
-    //-----------------------Propertyes------------------------------
-    //property var msgChip
 
-    //-----------------------Signals---------------------------------
+    /* ---------------Signals---------------- */
     signal destroyChip()
     signal backPress()
-    //-----------------------Chip Components-------------------------
+
+    /* ----Chip Components */
     Component {id: msghint; MessageChip{}}
 
-    //-----------------------Slots-----------------------------------
-    //onDestroyChip: msgChip.destroy()
 
     //-----------------------Page Components-------------------------
     Component {id: loginP; LoginPage{}}
@@ -103,11 +99,6 @@ App {
     Component {id: chatP;  ChatPage{}}
 
 
-
-    //-----------------------Js Functions----------------------------
-//    function dp(value) {
-//        return value * root.width / 100
-//    }
 
     function showChip(message) {
         var msgChip = msghint.createObject(root, {})
@@ -156,7 +147,7 @@ App {
             login()
         }
         onLoginF: showChip("Login Failed")
-        onSignS: showChip("Pos登记成功")
+        onSignS: showChip("注册成功")
         onSignF: showChip("注册失败,ID可能已被占用")
 
     }

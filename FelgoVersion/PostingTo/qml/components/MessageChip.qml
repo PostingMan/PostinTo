@@ -4,7 +4,7 @@ import QtQuick 2.12
 Rectangle {
 
     id: chip;
-    width: txt.width + dp(15);
+    width: txt.width + dp(30);
     height: txt.height + dp(20);
     anchors.horizontalCenter: parent.horizontalCenter;
     anchors.bottom: parent.bottom;
@@ -17,7 +17,7 @@ Rectangle {
         id: txt;
         anchors.centerIn: parent;
         text: "测试";
-        font.pixelSize: dp(3.5);
+        font.pixelSize: dp(15);
         color: "white";
 
     }

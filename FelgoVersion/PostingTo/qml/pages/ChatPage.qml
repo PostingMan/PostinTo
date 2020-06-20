@@ -52,17 +52,17 @@ Page {
     }
 
     
-
+    /* 消息泡泡 */
     ListView {
         id: view
         anchors{
             top: parent.top
-            topMargin: dp(2)
+            topMargin: dp(70)
             bottom: input.top
             bottomMargin: dp(4)
             horizontalCenter: parent.horizontalCenter
         }
-        width: dp(100)
+        width: dp(250)
         clip: true
         model: ListModel {
             id: listmode
@@ -94,7 +94,7 @@ Page {
             id: column
             anchors.right: sentByMe ? parent.right : undefined
             anchors.rightMargin: sentByMe ? 20 : undefined
-            spacing: dp(0.9)
+            spacing: dp(3)
             
             readonly property bool sentByMe: model.flag === "Y"
 
@@ -107,7 +107,7 @@ Page {
                 layoutDirection: sentByMe ? Qt.RightToLeft : Qt.LeftToRight
                 Rectangle {
                     id: avatar
-                    width: dp(7.5)
+                    width: dp(30)
                     height: width
                     radius: width/2
                     Text {
