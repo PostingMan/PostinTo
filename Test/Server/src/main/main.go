@@ -20,23 +20,22 @@ func NewMessage(conn *net.UDPConn, n int, rAddr *net.UDPAddr, buf []byte, err er
 var Running bool
 
 func main() {
-
-   fmt.Println("PostingTo Server Running...")
+   fmt.Println("...PostingTo Server Running...")
    Running = true
    
    /* data base */
    dataHandle.Connect()
-   
    defer dataHandle.Close()
 
    /* 创建通道 */
    syncChan := make(chan struct{}, 1)
+   
    lAddr, err := net.ResolveUDPAddr("udp", "0.0.0.0:8848")
    if err != nil {
       fmt.Println("ResolveUDPAddr err:", err)
       return
    }
-   // 监听客户端
+   /* 监听客户端 */
    conn, err := net.ListenUDP("udp", lAddr)
 
    if err != nil {
@@ -57,7 +56,11 @@ func main() {
       }
       
    }
-   fmt.Println("Hello, World!")
 
+   /* 执行该语句时将会发生阻塞，直到接收到数据，
+    * 但接收到的数据会被忽略。
+    * 这个方式实际上只是通过通道在 goroutine 
+    * 间阻塞收发实现并发同步。 
+    */
 	<-syncChan
 }

@@ -2,11 +2,8 @@ package config
 
 import (
 	"fmt"
-
 	"regexp"
-
 	"time"
-
 	"os"
 )
 

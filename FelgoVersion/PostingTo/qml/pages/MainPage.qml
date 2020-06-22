@@ -1,22 +1,16 @@
 import Felgo 3.0
 import QtQuick 2.12
-import QtQuick.Controls 2.12 /* TextField */
 import QtQuick.Layouts 1.12
 
 Page {
     id: mainP
-    title: qsTr("Main Page")
-    
-    //bk
-//    Rectangle {
-//        anchors.fill: parent
-//        color: "white"
-//    }
+    title: qsTr("Main")
 
     /* header */
     Rectangle {
+
 //        anchors.top: parent.top
-//        anchors.topMargin: dp(60)
+//        anchors.topMargin: dp(10)
         anchors.bottom: listRec.top
         anchors.bottomMargin: dp(15)
         width: parent.width
@@ -77,7 +71,6 @@ Page {
 
     }
 
-
     Rectangle {
         id: listRec
         anchors.centerIn: parent
@@ -86,7 +79,7 @@ Page {
         color: "#555555"
         opacity: 0
         Text {
-            text: qsTr("some rooms ...")
+            text: qsTr("...some rooms ...")
             color: "white"
             anchors.top: parent.top
             anchors.horizontalCenter: parent.horizontalCenter
@@ -130,7 +123,7 @@ Page {
             id: roomList
             anchors.centerIn: parent
             width: dp(200)
-            height: parent.height * 0.55
+            height: parent.height * 0.7
 
             model: ListModel{
                 id: roomodel
@@ -230,11 +223,14 @@ Page {
                         break
                     }
                 }
+
+                /* join-in */
                 if(pd) {
                     input.focus = false
                     backend.send_message_test("1005" + input.text + "/" + userId)
                     root.pushStack(0)
                     stack.currentPage.roomCode = input.text
+                    //stack.currentItem.roomCode = input.text
                     input.text = ""
                 }
                 else {
@@ -242,7 +238,7 @@ Page {
                     backend.send_message_test("1003" + input.text + "/" + userId)
                     root.pushStack(0)
                     stack.currentPage.roomCode = input.text
-                    //stack.currentItem.roomCode = input.text
+                    // stack.currentItem.roomCode = input.text
                     input.text = ""
                 }
             }
@@ -323,7 +319,7 @@ Page {
                                 font{
                                     pixelSize: dp(3.5)
                                     bold: true
-                                    family: "微软雅黑"
+                                    //family: "微软雅黑"
                                 }
                             }
                         }
@@ -465,6 +461,7 @@ Page {
         }
     }
     
+
     Connections {
         target: backend
         onGetNewRoom: {
@@ -488,8 +485,10 @@ Page {
         flashAni.stop()
         flash.rotation = 0
         input.focus = false
-        root.pushStack(0)
+        root.pushStack(1)
+
         stack.currentPage.roomCode = data
+        // stack.currentItem.roomCode = data
         backend.send_message_test("1005" + data + "/" + userId)
     }
 }

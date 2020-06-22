@@ -22,7 +22,6 @@ type Client struct {
 	curRom      string
 }
 
-
 type ChatRoom struct {
 	id			string
 	memCnt  	int
@@ -61,7 +60,6 @@ func Close() {
 }
 //连接数据库
 func Connect() {
-
 	var err error
 	db, err = sql.Open("mysql",dbusername+":"+dbpassword+"@tcp("+dbhostip+")/"+dbname+"?charset=utf8")
 	checkErr(err)
@@ -266,7 +264,7 @@ func HandleMsg(buf []byte, conn *net.UDPConn, rAddr *net.UDPAddr) {
 			roomMutex.Unlock()
 
 		case config.REQ_ROOM_INFO:
-			fmt.Println("Flash")
+			fmt.Println("Flashing")
 			roomMutex.Lock()
 			PrintStatus()
 			for key, _ := range rooms {
@@ -365,7 +363,6 @@ func LoginQuery(id string, nickname string, psw string)(flag int) {
 			fmt.Println(e)
 		}
 		_, _ = stmt.Exec(nickname, id)
-		//也有更名失败的处理
 		return config.LOGIN_SUCCESS
 	} else {
 		return config.LOGIN_FAILED

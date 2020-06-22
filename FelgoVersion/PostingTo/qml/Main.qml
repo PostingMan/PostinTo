@@ -1,5 +1,5 @@
 import Felgo 3.0
-
+//import QtQuick.Controls 2.12
 import QtQuick 2.12
 import Qt.labs.settings 1.1
 
@@ -8,7 +8,6 @@ import "logic"
 import "pages"
 
 App {
-
     id: root
     visible: true
     width: 468
@@ -22,18 +21,59 @@ App {
     property var userId
     property var userName
 
-    NavigationStack {
-        id: stack
-        anchors.fill: parent
-        initialPage: pageLoader
-        focus: true
+    property bool ifLogin: false
+
+    LoginPage {
+        visible: !ifLogin
+        onLogin: ifLogin = true
+    }
+
+    Navigation {
+        id: navigation
+        visible: ifLogin
+
+        NavigationItem {
+            // id: stack
+            title: "Main"
+            icon: IconType.clocko
+
+            NavigationStack {
+                id: stack
+                initialPage: mainP
+            }
+        }
+        NavigationItem {
+            title: "info"
+            icon: IconType.clocko
+
+            NavigationStack {
+
+                Page {
+                    title: qsTr("info")
+
+                }
+            }
+        }
+
     }
 
 
-    Loader {
-        id: pageLoader
-        sourceComponent: loginP
-    }
+//    NavigationStack {
+//        id: stack
+
+
+
+//        anchors.fill: parent
+//        initialPage:  pageLoader
+//        focus: true
+//    }
+
+
+//    Loader {
+//        id: pageLoader
+//        sourceComponent: loginP
+
+//    }
 
 
     Connections{
@@ -102,12 +142,14 @@ App {
     function pushStack(code) {
         switch(code){
         case 0: stack.push(chatP); break;
+        case 1: stack.navigationStack.push(chatP); break;
         default: break;
         }
     }
 
     function login() {
         pageLoader.sourceComponent = mainP
+
     }
 
     function showMask(){
@@ -137,7 +179,7 @@ App {
         onWelcome: showChip("-----PostingTo server is open-----")
 
         onLoginS: {
-            //showChip("Login Succeed")
+            showChip("Login Succeed")
             login()
         }
         onLoginF: showChip("Login Failed")
