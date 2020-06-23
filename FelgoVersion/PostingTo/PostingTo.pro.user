@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.11.2, 2020-06-22T21:33:34. -->
+<!-- Written by QtCreator 4.11.2, 2020-06-23T14:33:11. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -285,6 +285,7 @@
     </valuelist>
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">PostingTo2</value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/jaywhen/PostingTo/FelgoVersion/PostingTo/PostingTo.pro</value>
     <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">/home/jaywhen/PostingTo/FelgoVersion/PostingTo/PostingTo.pro</value>
     <value type="QString" key="RunConfiguration.Arguments"></value>
@@ -856,6 +857,7 @@
     <valuelist type="QVariantList" key="Android.PreStartShellCmdListKey"/>
     <value type="int" key="PE.EnvironmentAspect.Base">0</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">PostingTo</value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.AndroidRunConfiguration:/home/jaywhen/PostingTo/FelgoVersion/PostingTo/PostingTo.pro</value>
     <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">/home/jaywhen/PostingTo/FelgoVersion/PostingTo/PostingTo.pro</value>
     <value type="QString" key="RunConfiguration.Arguments"></value>

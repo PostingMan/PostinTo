@@ -18,6 +18,7 @@ const (
 	REQ_ROOM_INFO  = 1007
 	SET_SHOWYEAR   = 1008
 	GET_SHOWYEAR   = 1009
+	NEW_MEMBER_ENTER = 1012
 )
 
 /* 登录/注册状态码 */

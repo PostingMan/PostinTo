@@ -1,75 +1,73 @@
 import Felgo 3.0
 import QtQuick 2.12
-import QtQuick.Layouts 1.12
-
+import QtQuick.Controls 2.12
 Page {
     id: mainP
-    title: qsTr("Main")
 
-    /* header */
+    //bk
+    Rectangle {
+        anchors.fill: parent
+        color: "white"
+    }
+
+    //昨日秃头冠军
     Rectangle {
 
-//        anchors.top: parent.top
-//        anchors.topMargin: dp(10)
-        anchors.bottom: listRec.top
-        anchors.bottomMargin: dp(15)
-        width: parent.width
-        height: dp(65)
-        color: "white" /*Theme.colors.tintLightColor*/
+        id: user
+        width: dp(30)
+        height: width
+        radius: width / 2
+        color: "#00838F"
+        anchors {
+            bottom: listRec.top
+            bottomMargin: dp(20)
+            left: parent.left
+            leftMargin: dp(10)
 
-        RowLayout {
-            width: parent.width
-            anchors.centerIn: parent
+        }
 
-            //昨日秃头冠军
-            Rectangle {
-                id: user
-                width: dp(35)
-                height: width
-                radius: width / 2
-                color: "#00838F"
-
-                anchors {
-//                    top: parent.top
-                    left: parent.left
-                    margins: dp(6.5)
-                }
-
-                Text {
-                    text: userName[0]//JSON.stringify(userName)[0]
-                    anchors.centerIn: parent;
-                    font {
-                        family: tintFnt
-                        pixelSize: dp(15)
-                        bold: true
-                    }
-                    color: "#FFFFFF"
-                }
+        Text {
+            text: userName[0]//JSON.stringify(userName)[0]
+            anchors.centerIn: parent;
+            font {
+                family: tintFnt
+                pixelSize: dp(15)
+                bold: true
             }
+            color: "#FFFFFF"
+        }
+    }
+    AppButton {
+        id: beChampion
+        text: "want C"
+        anchors.left: user.right
+        anchors.verticalCenter: user.verticalCenter
+        anchors.margins: dp(25)
 
-            AppButton {
-                id: beChampion
-                text: "want C"
-
-                onClicked: {
-                    root.showMask()
-                    setChampion.createObject(root)
-                }
-
-            }
-
-            AppButton {
-                id: seeChampion
-                text: "Y C"
-                onClicked: {
-                    root.showMask()
-                    championPage.createObject(root)
-                }
-
-            }
+        onClicked: {
+            root.showMask()
+            setChampion.createObject(root)
         }
 
     }
+
+    AppButton {
+        anchors{
+            left: beChampion.right
+            right: parent.right
+            verticalCenter: beChampion.verticalCenter
+            //margins: dp(10)
+            rightMargin: dp(10)
+        }
+        id: seeChampion
+        text: "Y C"
+        onClicked: {
+            root.showMask()
+            championPage.createObject(root)
+        }
+
+    }
+
 
     Rectangle {
         id: listRec
@@ -79,7 +77,7 @@ Page {
         color: "#555555"
         opacity: 0
         Text {
-            text: qsTr("...some rooms ...")
+            text: qsTr("some rooms ...")
             color: "white"
             anchors.top: parent.top
             anchors.horizontalCenter: parent.horizontalCenter
@@ -118,12 +116,12 @@ Page {
             }
         }
         Component.onCompleted: create.start()
-        
+
         ListView {
             id: roomList
             anchors.centerIn: parent
             width: dp(200)
-            height: parent.height * 0.7
+            height: parent.height * 0.55
 
             model: ListModel{
                 id: roomodel
@@ -150,16 +148,17 @@ Page {
             Component.onCompleted: backend.send_message_test("1007")
         }
     }
-    
+
     Image {
         id: flash
         source: "../../assets/mdpi/ucrop_ic_rotate.png"
-        width: dp(30)
+        width: dp(20)
+        //height: dp(8)
         fillMode: Image.PreserveAspectFit
         anchors {
             right: listRec.right
             bottom: listRec.bottom
-            margins: dp(6)
+            margins: dp(4)
         }
         PropertyAnimation {
             id: flashAni
@@ -179,12 +178,12 @@ Page {
                 flashAni.start()
                 timeOutT.start()
                 backend.send_message_test("1007")
-                root.showChip("刷新中")
+                root.showChip("刷新中~")
                 roomodel.clear()
             }
         }
     }
-    
+
     Timer {
         id: timeOutT
         interval: 500
@@ -192,60 +191,64 @@ Page {
         onTriggered: if(flashAni.running) backend.send_message_test("1007")
     }
 
-    RowLayout {
-        width: parent.width
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: dp(30)
-        spacing: dp(5)
 
-        AppTextField {
-            id: input
-            width: listRec.width * 0.5
-            anchors.left: parent.left
-            anchors.leftMargin: dp(30)
-
-            placeholderText: "请输入房间ID"
-            placeholderTextColor: "gray"
-
+    AppTextField {
+        id: input
+        width: listRec.width * 0.5
+        anchors {
+            bottom: parent.bottom
+            bottomMargin: dp(20)
+            left: parent.left
+            leftMargin: dp(6)
         }
-        AppButton {
-            anchors.right: parent.right
-            anchors.rightMargin: dp(20)
-            radius:dp(5)
 
-            text: qsTr("Go/join-in")
+        placeholderText: "请输入房间ID"
+        placeholderTextColor: "gray"
 
-            onClicked: {
-                var pd = false
-                for(var dat in roomList.model) {
-                    if(input.text === roomList.model[dat]){
-                        pd = true
-                        break
-                    }
-                }
+    }
 
-                /* join-in */
-                if(pd) {
-                    input.focus = false
-                    backend.send_message_test("1005" + input.text + "/" + userId)
-                    root.pushStack(0)
-                    stack.currentPage.roomCode = input.text
-                    //stack.currentItem.roomCode = input.text
-                    input.text = ""
-                }
-                else {
-                    input.focus = false
-                    backend.send_message_test("1003" + input.text + "/" + userId)
-                    root.pushStack(0)
-                    stack.currentPage.roomCode = input.text
-                    // stack.currentItem.roomCode = input.text
-                    input.text = ""
+    AppButton {
+        anchors {
+            bottom: parent.bottom
+            bottomMargin: dp(20)
+            right: parent.right
+            rightMargin: dp(6)
+        }
+        radius:dp(5)
+
+        text: qsTr("Go/join-in")
+
+        onClicked: {
+            var pd = false
+            for(var dat in roomList.model) {
+                if(input.text === roomList.model[dat]){
+                    pd = true
+                    break
                 }
             }
 
+            /* join-in */
+            if(pd) {
+                input.focus = false
+                backend.send_message_test("1005" + input.text + "/" + userId)
+                root.pushStack(0)
+                // stack.currentPage.roomCode = input.text
+                stack.currentItem.roomCode = input.text
+                input.text = ""
+            }
+            else {
+                input.focus = false
+                backend.send_message_test("1003" + input.text + "/" + userId)
+                root.pushStack(0)
+                //stack.currentPage.roomCode = input.text
+                stack.currentItem.roomCode = input.text
+                input.text = ""
+            }
         }
+
     }
-    
+
+
     Component {
         id: championPage
         MouseArea {
@@ -257,15 +260,13 @@ Page {
             property var userId
             property var saying
             property var time
-            
+
             Image {
                 id: img
                 source: "../../assets/champion.jpg"
                 anchors.verticalCenter: parent.verticalCenter
                 fillMode: Image.PreserveAspectFit
                 opacity: 0
-
-                /* frog avat */
                 Rectangle {
                     anchors {
                         right: parent.right
@@ -292,8 +293,6 @@ Page {
                         rotation: -45
                     }
                 }
-
-                /* boss says */
                 Rectangle {
                     color: "#DDA0DD"
                     width: parent.width * 0.6
@@ -319,7 +318,7 @@ Page {
                                 font{
                                     pixelSize: dp(3.5)
                                     bold: true
-                                    //family: "微软雅黑"
+                                    family: "微软雅黑"
                                 }
                             }
                         }
@@ -364,7 +363,7 @@ Page {
                     th_is.destroy()
                 }
             }
-            Connections { 
+            Connections {
                 target: backend
                 onGetShowYearChampion: {
                     mod.append({str: "昨日大佬：\n" + id})
@@ -373,14 +372,14 @@ Page {
                     txt.text = name[0]
                 }
             }
-            
+
             Component.onCompleted: {
                 create.start()
                 backend.send_message_test("1009")
             }
         }
     }
-    
+
     Component {
         id: setChampion
         MouseArea {
@@ -400,7 +399,7 @@ Page {
                 anchors.verticalCenter: parent.verticalCenter
                 fillMode: Image.PreserveAspectFit
                 opacity: 0
-                
+
                 Rectangle {
                     color: "white"; radius: dp(3); opacity: 0.7
                     anchors.horizontalCenter: parent.horizontalCenter;
@@ -417,9 +416,9 @@ Page {
                             pixelSize: height * 0.6
                         }
                         maximumLength: 15
-                    }    
+                    }
                 }
-                
+
             }
             ParallelAnimation {
                 id: create;
@@ -460,7 +459,6 @@ Page {
             Component.onCompleted: create.start()
         }
     }
-    
 
     Connections {
         target: backend
@@ -473,22 +471,20 @@ Page {
             root.showChip("更新成功!")
         }
     }
-    
+
     Connections {
         target: root
         onBackPress: {
             roomodel.clear()
         }
     }
-    
+
     function getIntoRoom(data) {
         flashAni.stop()
         flash.rotation = 0
         input.focus = false
-        root.pushStack(1)
-
-        stack.currentPage.roomCode = data
-        // stack.currentItem.roomCode = data
+        root.pushStack(0)
+        stack.currentItem.roomCode = data
         backend.send_message_test("1005" + data + "/" + userId)
     }
 }

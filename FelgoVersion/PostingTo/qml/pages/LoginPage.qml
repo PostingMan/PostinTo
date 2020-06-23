@@ -7,8 +7,6 @@ Page {
     id: loginPage
     title: qsTr("Login")
 
-    signal login()
-
     navigationBarHidden: true
 
     Column {
@@ -114,7 +112,6 @@ Page {
 
             //本地存储用户名\密码\id
             root.setVal(userCode.text, userId.text, userPsw.text)
-            login()
         }
         else {
             showChip("没填完整我mysql拿头给您登录？")

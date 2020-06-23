@@ -1,34 +1,22 @@
+import Felgo 3.0
 import QtQuick 2.0
 import QtQuick.Controls 2.12
-import Felgo 3.0
 import QtQuick.Layouts 1.12
 
 Page {
     id: chatP
-    title: roomCode
-
-
     property alias _title:_title.text
     property var roomCode
 
-
-    leftBarItem: TextButtonBarItem {
-      text: "Cancel"
-      onClicked: {
-        page.navigationStack.pop()
-      }
-    }
-
-
-    // background: Rectangle {color: "#40C4FF"}
+    background: Rectangle {color: "#40C4FF"}
     
     //顶栏
-    Rectangle{
-        anchors.top: parent.top
-        anchors.topMargin: dp(60)
+    header: Rectangle{
+        // anchors.top: parent.top
+        anchors.topMargin: dp(10)
 
 
-        color:  "#40C4FF" /*Theme.colors.tintLightColor*/
+        color:  Theme.colors.tintLightColor
         width: parent.width
         height: dp(60)
         Text {
@@ -158,7 +146,7 @@ Page {
         height: Math.min(Math.max(dp(8), text.height), text.height * 6);
         anchors {
             bottom: parent.bottom
-            bottomMargin: dp(8)
+            bottomMargin: dp(15)
             left: parent.left
             leftMargin: dp(6)
         }
@@ -171,7 +159,7 @@ Page {
             right: parent.right
             bottom: parent.bottom
             rightMargin: dp(6)
-            bottomMargin: dp(6)
+            bottomMargin: dp(15)
         }
         width: parent.width * 0.2
         radius: dp(3)

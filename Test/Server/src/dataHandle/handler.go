@@ -337,6 +337,10 @@ func HandleMsg(buf []byte, conn *net.UDPConn, rAddr *net.UDPAddr) {
 				_, _ = conn.WriteToUDP([]byte("1011"+id+"/"+GetUserNameQuery(id)+"/"+tim+"/"+sygj), rAddr)
 			}
 
+		// case config.NEW_MEMBER_ENTER: 
+			
+
+
 		default:
 
 			fmt.Println("Undefined message type!")

@@ -1,5 +1,5 @@
 import Felgo 3.0
-//import QtQuick.Controls 2.12
+import QtQuick.Controls 2.12
 import QtQuick 2.12
 import Qt.labs.settings 1.1
 
@@ -21,59 +21,21 @@ App {
     property var userId
     property var userName
 
-    property bool ifLogin: false
-
-    LoginPage {
-        visible: !ifLogin
-        onLogin: ifLogin = true
-    }
-
-    Navigation {
-        id: navigation
-        visible: ifLogin
-
-        NavigationItem {
-            // id: stack
-            title: "Main"
-            icon: IconType.clocko
-
-            NavigationStack {
-                id: stack
-                initialPage: mainP
-            }
-        }
-        NavigationItem {
-            title: "info"
-            icon: IconType.clocko
-
-            NavigationStack {
-
-                Page {
-                    title: qsTr("info")
-
-                }
-            }
-        }
+    StackView {
+        id: stack
+        anchors.fill: parent
+        initialItem:  pageLoader
+        focus: true
 
     }
 
 
-//    NavigationStack {
-//        id: stack
 
+    Loader {
+        id: pageLoader
+        sourceComponent: loginP
 
-
-//        anchors.fill: parent
-//        initialPage:  pageLoader
-//        focus: true
-//    }
-
-
-//    Loader {
-//        id: pageLoader
-//        sourceComponent: loginP
-
-//    }
+    }
 
 
     Connections{
@@ -142,7 +104,6 @@ App {
     function pushStack(code) {
         switch(code){
         case 0: stack.push(chatP); break;
-        case 1: stack.navigationStack.push(chatP); break;
         default: break;
         }
     }
