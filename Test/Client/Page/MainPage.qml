@@ -151,7 +151,7 @@ Page {
                 radius: 5
                 Text {
                     anchors.centerIn: parent
-                    text: "【" + parent.roomCod + "】"
+                    text: "[" + parent.roomCod + "]"
                     font.family: "Agency FB Negreta"
                     font.pixelSize: parent.height * 0.6
                 }
@@ -510,7 +510,6 @@ Page {
         flash.rotation = 0
         input.focus = false
         root.pushStack(0)
-        
         stack.currentItem.roomCode = data
         backend.send_message_test("1005" + data + "/" + userId)
     }

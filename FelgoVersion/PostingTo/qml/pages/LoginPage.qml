@@ -7,8 +7,6 @@ Page {
     id: loginPage
     title: qsTr("Login")
 
-    navigationBarHidden: true
-
     Column {
         id: header
         visible: true
@@ -32,19 +30,16 @@ Page {
     }
 
     Column {
-
         id: mid
 
         anchors.centerIn: parent
         spacing: dp(15)
         width: dp(256)
 
-
         AppTextField {
             id: userCode
             width: parent.width
             placeholderText: "Pos ID"
-
             validator: RegExpValidator {regExp: /^[0-9]*$/}
 
         }
@@ -52,13 +47,10 @@ Page {
         AppTextField {
             id: userId
             width: parent.width
-
             inputMode: inputModeUsername
             placeholderText: "Nickname"
             validator: RegExpValidator {regExp: /^\w*$/}
-
         }
-
 
         AppTextField {
             id: userPsw
@@ -66,10 +58,7 @@ Page {
             placeholderText: "Password"
             validator: RegExpValidator {regExp: /^\w*$/}
             inputMode: inputModePassword
-
-
         }
-
     }
 
 
@@ -105,6 +94,7 @@ Page {
             var logData = userCode.text + "/" + userId.text + "/" + userPsw.text;
 
             //发送数据
+            /* 1001 ---> LOGINSMG_CODE */
             backend.send_message_test("1001" + logData)
 
             //设置主页id与用户名
@@ -119,9 +109,11 @@ Page {
     }
 
     function handleSignIn() {
-        //信息完整
+        /* 信息完整 */
         if(userCode.text != "" && userId.text != "" && userPsw.text != ""){
             var logData = userCode.text + "/" + userId.text + "/" + userPsw.text;
+
+            /* 1002 ---> SIGNIN_CODE */
             backend.send_message_test("1002" + logData)
         }
         else root.showChip("没填完整我mysql拿头给您注册？")

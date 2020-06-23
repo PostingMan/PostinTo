@@ -9,7 +9,6 @@ import "pages"
 
 App {
     id: root
-    visible: true
     width: 468
     height: 832
 
@@ -29,14 +28,11 @@ App {
 
     }
 
-
-
     Loader {
         id: pageLoader
         sourceComponent: loginP
 
     }
-
 
     Connections{
         target: keyFilter
@@ -138,7 +134,6 @@ App {
         target: backend
 
         onWelcome: showChip("-----PostingTo server is open-----")
-
         onLoginS: {
             showChip("Login Succeed")
             login()
@@ -146,10 +141,10 @@ App {
         onLoginF: showChip("Login Failed")
         onSignS: showChip("注册成功")
         onSignF: showChip("注册失败,ID可能已被占用")
-
     }
 
     Component.onCompleted: {
+        /* START_CODE ---> 1000 */
         backend.send_message_test("1000"+"114514")
         //login()
     }

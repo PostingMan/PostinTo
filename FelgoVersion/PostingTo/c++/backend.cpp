@@ -18,7 +18,6 @@ void Backend::init(){
  * 向服务端发送请求报文，服务端对不同的请求作出对应的响应
  */
 void Backend::send_message_test(QVariant msg){
-
     QByteArray message = msg.toString().toUtf8();
     qint64 ret;
     ret = m_socket->writeDatagram(message, QHostAddress("39.97.118.39"), port);
@@ -52,7 +51,7 @@ void Backend::read_msg(){
     case LOGIN_FAILED: emit loginF(); break;
     case SIGN_SUCCESS: emit signS(); break;
     case SIGN_FAILED: emit signF(); break;
-    case NEW_ROOM: emit getNewRoom(data.mid(4, -1)); break;
+    case NEW_ROOM: emit getNewRoom(data.mid(4, -1)); break; /* -1 means returns all characters that are available from the position 4 */
     case ROOM_FINISH: emit getRoomFinish(); break;
     case SHOWYEAR_CHAMPION: {
         int arr[3] = {0};

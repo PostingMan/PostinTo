@@ -10,7 +10,7 @@ import (
 	"net"
 	"strconv"
 	"strings"
-	"sync"
+	"sync"  			/* 互斥锁/读写锁 */
 	"time"
 )
 
@@ -37,11 +37,11 @@ var (
 	db 				  *sql.DB
 )
 
-var userMutex 	sync.RWMutex
+var userMutex 	sync.RWMutex //读写锁
 var userCon     map[string] bool
 var userCnt     int
 
-var roomMutex   sync.RWMutex
+var roomMutex   sync.RWMutex 
 var rooms 		map[string] *ChatRoom
 var roomCnt 	int
 
@@ -68,12 +68,14 @@ func Connect() {
 	userCon = make(map[string] bool)
 	rooms   = make(map[string] *ChatRoom)
 	fmt.Println(db.Stats())
+	fmt.Println("connect db ok")
 	// rooms = make(map[string] *chatRoom.ChatRoom)
 	// fmt.Println(rooms)
 
 }
 //处理客户端发来的信息
 func HandleMsg(buf []byte, conn *net.UDPConn, rAddr *net.UDPAddr) {
+	fmt.Println("---begin handleMsg---")
 	defer func() {
 		if errs := recover(); errs != nil{
 			fmt.Println(errs)
@@ -93,18 +95,20 @@ func HandleMsg(buf []byte, conn *net.UDPConn, rAddr *net.UDPAddr) {
 			}()
 
 		case config.LOGIN_CODE:
-
 			fmt.Println("Somebody is trying to Login")
 			loginData := string(buf[4:])
 			loginData = config.CompressStr(loginData)
-
 			left  := strings.Index(loginData, "/")
 			right := strings.LastIndex(loginData, "/")
+
+			/* 获取报文中的用id/昵称/密码 */
 			id := loginData[0:left]
 			name := loginData[left+1:right]
 			psw := loginData[right+1:]
-			flag  := LoginQuery(id, name, psw)
 
+			flag  := LoginQuery(id, name, psw)
+			
+			/* 登录人id与密码正确 */
 			if flag == config.LOGIN_SUCCESS {
 				fmt.Println("Login Success")
 				userMutex.RLock()
@@ -117,31 +121,38 @@ func HandleMsg(buf []byte, conn *net.UDPConn, rAddr *net.UDPAddr) {
 				//} else {
 				//	userMutex.RUnlock()
 				//}
-				bitMsg := []byte("8100")// + "登陆成功")
+
+				/*  8100 ---> LOGIN_SUCCESS  */
+				bitMsg := []byte("8100") 
 				_, _ = conn.WriteToUDP(bitMsg, rAddr)
 
 			} else if flag == config.LOGIN_FAILED {
 				fmt.Println("Login Failed")
+				/* 8101 ---> LOGIN_FAILED */
 				bitMsg := []byte("8101")// + "登陆失败,请检查信息")
 				_, _ = conn.WriteToUDP(bitMsg, rAddr)
 			}
 			PrintStatus()
 
 		case config.SIGNIN_CODE:
-
 			fmt.Println("Somebody is trying to Sign In")
 			loginData := string(buf[4:])
 			loginData = config.CompressStr(loginData)
 
 			left  := strings.Index(loginData, "/")
 			right := strings.LastIndex(loginData, "/")
+
 			flag  := SignInQuery(loginData[0:left], loginData[left+1:right], loginData[right+1:])
 
 			if flag == config.SIGNIN_SUCCESS {
+				/* 8102 ---> SIGNIN_SUCCESS */
 				bitMsg := []byte("8102")// + "注册成功")
+				
+				/* 回写给客户端，注册成功 */
 				res, err := conn.WriteToUDP(bitMsg, rAddr)
 				fmt.Println(res, err)
 			} else if flag == config.SIGNIN_FAILED {
+				/* 8103 ---> SIGNIN_FAILED */
 				bitMsg := []byte("8103")// + "注册失败,id可能已被占用")
 				res, err := conn.WriteToUDP(bitMsg, rAddr)
 				fmt.Println(res, err)
@@ -264,14 +275,14 @@ func HandleMsg(buf []byte, conn *net.UDPConn, rAddr *net.UDPAddr) {
 			roomMutex.Unlock()
 
 		case config.REQ_ROOM_INFO:
-			fmt.Println("Flashing")
-			roomMutex.Lock()
+			fmt.Println("Refreshing")
+			roomMutex.Lock() //加锁
 			PrintStatus()
 			for key, _ := range rooms {
 				_, _ = conn.WriteToUDP([]byte("1007"+key), rAddr)
 				//fmt.Println(key)
 			}
-			roomMutex.Unlock()
+			roomMutex.Unlock() //解锁
 			_, _ = conn.WriteToUDP([]byte("1008"), rAddr)
 
 		case config.CREATE_ROOM:
@@ -284,7 +295,7 @@ func HandleMsg(buf []byte, conn *net.UDPConn, rAddr *net.UDPAddr) {
             if roomCode == "" {
             	return
 			}
-			roomMutex.RLock()
+			roomMutex.RLock() //读锁
 			if _, ok := rooms[roomCode]; !ok {
 				roomMutex.RUnlock()
 				roomMutex.Lock()
@@ -314,9 +325,10 @@ func HandleMsg(buf []byte, conn *net.UDPConn, rAddr *net.UDPAddr) {
 				rooms[roomCode].memCnt++
 				roomMutex.Unlock()
 			}
+			
+			/* client's 1007 is NEW_ROOM */
 			_, _ = conn.WriteToUDP([]byte("1007"+roomCode), rAddr)
 			PrintStatus()
-	    //接收到未知类型的信息
 
 		case config.SET_SHOWYEAR:
 			Data := string(buf[4:])
@@ -338,17 +350,19 @@ func HandleMsg(buf []byte, conn *net.UDPConn, rAddr *net.UDPAddr) {
 			}
 
 		// case config.NEW_MEMBER_ENTER: 
-			
-
-
 		default:
-
 			fmt.Println("Undefined message type!")
 			fmt.Println(rAddr, string(buf[4:]))
 	}
+	
+	fmt.Println("---over handle ---")
 }
 
-//操作数据库
+/* 操作数据库 */
+
+/* 查询登录人信息，若 id 与密码都与数据库中相匹配
+ * 则返回 LOGIN_SUCCESS，否则返回 LOGIN_FAILED
+ */
 func LoginQuery(id string, nickname string, psw string)(flag int) {
 	var userid    string
 	var username  string
@@ -374,6 +388,10 @@ func LoginQuery(id string, nickname string, psw string)(flag int) {
 
 }
 
+/* 用户注册操作，若 id 在 MYSQL 的 users 表中不存在
+ * 则将相关信息插入 users 表中，成功返回 SIGNIN_SUCCESS
+ * 否则用户存在，返回 SIGNIN_FAILED
+ */
 func SignInQuery(id string, nickname string, psw string)(flag int) {
 	var cnt int
 	e := db.QueryRow("SELECT COUNT(userId) FROM users WHERE userId=?", id).Scan(&cnt)
@@ -403,7 +421,7 @@ func GetUserNameQuery(id string)(name string) {
 		name = "無"
 	}
 	if err != nil {
-		fmt.Println("???????????????????????????????????????????????????")
+		fmt.Println("查无此人")
 		fmt.Println(err)
 	}
 	return

@@ -10,7 +10,7 @@ Page {
         color: "white"
     }
 
-    //昨日秃头冠军
+    /* header */
     Rectangle {
 
         id: user
@@ -50,7 +50,6 @@ Page {
         }
 
     }
-
     AppButton {
         anchors{
             left: beChampion.right
@@ -68,7 +67,7 @@ Page {
 
     }
 
-
+    /* rooms list view */
     Rectangle {
         id: listRec
         anchors.centerIn: parent
@@ -77,11 +76,10 @@ Page {
         color: "#555555"
         opacity: 0
         Text {
-            text: qsTr("some rooms ...")
+            text: qsTr("...some rooms ...")
             color: "white"
             anchors.top: parent.top
             anchors.horizontalCenter: parent.horizontalCenter
-
         }
 
         ParallelAnimation {
@@ -97,7 +95,6 @@ Page {
                 target: listRec
                 property: "width";
                 to: parent.width * 0.85
-
                 duration: 325
                 easing.type: Easing.OutQuart
             }
@@ -145,6 +142,7 @@ Page {
                     onClicked: getIntoRoom(modelData)
                 }
             }
+            /* 1007 -> NEW_ROOM(Request room information)  */
             Component.onCompleted: backend.send_message_test("1007")
         }
     }
@@ -152,13 +150,13 @@ Page {
     Image {
         id: flash
         source: "../../assets/mdpi/ucrop_ic_rotate.png"
-        width: dp(20)
+        width: dp(30)
         //height: dp(8)
         fillMode: Image.PreserveAspectFit
         anchors {
             right: listRec.right
             bottom: listRec.bottom
-            margins: dp(4)
+            margins: dp(6)
         }
         PropertyAnimation {
             id: flashAni
@@ -172,11 +170,13 @@ Page {
 
         MouseArea {
             anchors.centerIn: parent
-            width: dp(8)
-            height: dp(8)
+            width: dp(20)
+            height: dp(20)
             onClicked: {
                 flashAni.start()
                 timeOutT.start()
+
+                /* 1007 -> NEW_ROOM(Request room information)  */
                 backend.send_message_test("1007")
                 root.showChip("刷新中~")
                 roomodel.clear()
@@ -207,6 +207,7 @@ Page {
 
     }
 
+    /* join-in/create Button */
     AppButton {
         anchors {
             bottom: parent.bottom
@@ -232,15 +233,17 @@ Page {
                 input.focus = false
                 backend.send_message_test("1005" + input.text + "/" + userId)
                 root.pushStack(0)
-                // stack.currentPage.roomCode = input.text
                 stack.currentItem.roomCode = input.text
                 input.text = ""
             }
             else {
+                /* create */
                 input.focus = false
+
+                /* 1003 ---> CREATE_ROOM */
                 backend.send_message_test("1003" + input.text + "/" + userId)
+                showChip(userId+"create a room")
                 root.pushStack(0)
-                //stack.currentPage.roomCode = input.text
                 stack.currentItem.roomCode = input.text
                 input.text = ""
             }
@@ -485,6 +488,8 @@ Page {
         input.focus = false
         root.pushStack(0)
         stack.currentItem.roomCode = data
+
+        /* 1005 ---> GET_INTO_ROM */
         backend.send_message_test("1005" + data + "/" + userId)
     }
 }
