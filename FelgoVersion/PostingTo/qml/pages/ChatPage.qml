@@ -56,6 +56,12 @@ Page {
     /* 消息泡泡 */
     ListView {
         id: view
+        Text {
+            id: titles
+            text: qsTr("chachacha")
+            anchors.top: parent.top
+            anchors.horizontalCenter: parent.horizontalCenter
+        }
         anchors{
             top: parent.top
             topMargin: dp(85)
@@ -80,7 +86,7 @@ Page {
         delegate: Column {
             id: column
             anchors.right: sentByMe ? parent.right : undefined
-            anchors.rightMargin: sentByMe ? 20 : undefined
+            anchors.rightMargin: sentByMe ? dp(8) : undefined
             spacing: dp(6)
             
             readonly property bool sentByMe: model.flag === "Y"
@@ -94,14 +100,14 @@ Page {
                 layoutDirection: sentByMe ? Qt.RightToLeft : Qt.LeftToRight
                 Rectangle {
                     id: avatar
-                    width: dp(30)
+                    width: dp(35)
                     height: width
                     radius: width/2
                     Text {
                         anchors.centerIn: parent
                         text: model.from[0]
                         font.family: tintFnt
-                        font.pixelSize: parent.width * 0.6
+                        font.pixelSize: parent.width * 0.7
                     }
                 }
 
@@ -110,23 +116,23 @@ Page {
                                messageText.implicitWidth + dp(5),
                                0.6 * (view.width - avatar.width - messageRow.spacing))
                     height: messageText.implicitHeight + dp(5)
-                    color: sentByMe ? "lightgrey" : "steelblue"
+                    color: sentByMe ? "#61649f" : "ghostwhite"
                     radius: dp(5)
                     Label {
                         id: messageText
                         text: content
-                        color: sentByMe ? "black" : "white"
+                        color: sentByMe ? "white" : "black"
                         anchors.fill: parent
                         anchors.margins: dp(2.5)
                         wrapMode: Label.Wrap
-                        font.family: "Microsoft YaHei UI"
+                        // font.family: "Microsoft YaHei UI"
                     }
                 }
             }
 
             Label {
                 id: timestampText
-                text: from + "--" + time
+                text: from + "-" + time
                 color: "lightgrey"
                 anchors.right: sentByMe ? parent.right : undefined
                 anchors.left: sentByMe? undefined : messageRow.left
@@ -201,6 +207,10 @@ Page {
                 view.positionViewAtEnd()
             }
         }
+        onMemBerIn: {
+            showChip(memid+" coming~")
+        }
+
     }
     
     // temp Version

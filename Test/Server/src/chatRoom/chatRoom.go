@@ -24,5 +24,4 @@ func (c *ChatRoom) Start(id string) {
 	c.memberCnt = 0
 	c.roomId = id
 	c.ticker = time.NewTicker(time.Minute * 5)
-
 }

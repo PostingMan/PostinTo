@@ -96,6 +96,7 @@ void Backend::read_msg(){
         break;
     }
     
+    case MEMBER_IN: emit memberin(data.mid(4,-1)); break;
     default: break;
     }
     

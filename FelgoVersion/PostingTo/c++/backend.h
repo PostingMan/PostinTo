@@ -33,13 +33,30 @@ signals:
     void getRoomFinish();
     void getShowYearChampion(QVariant id, QVariant name, QVariant time, QVariant sygj);
     void memberAdd(QVariant roomid);
+    void memberin(QVariant memid);
 
 private:
     QUdpSocket* m_socket;
     
-    enum {START_CODE = 1000, LOGINSMG_CODE, SIGNIN_CODE, GET_MSG_CODE, 
-          GEI_INTO_ROM = 1005, QUIT_THE_ROOM, NEW_ROOM, ROOM_FINISH,
-          MEMBER_IN, MEMBER_OUT, SHOWYEAR_CHAMPION};
+    enum {START_CODE = 1000,
+          LOGINSMG_CODE,
+          SIGNIN_CODE,
+          GET_MSG_CODE,
+          GEI_INTO_ROM = 1005,
+          QUIT_THE_ROOM,
+          NEW_ROOM,
+          ROOM_FINISH,
+
+          MEMBER_IN,
+          MEMBER_OUT,
+          SHOWYEAR_CHAMPION
+
+          /* new */
+
+
+
+
+         };
     
     enum {LOGIN_SUCCESS = 8100, LOGIN_FAILED, SIGN_SUCCESS, SIGN_FAILED};
 };

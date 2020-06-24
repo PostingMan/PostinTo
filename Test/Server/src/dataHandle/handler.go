@@ -186,6 +186,7 @@ func HandleMsg(buf []byte, conn *net.UDPConn, rAddr *net.UDPAddr) {
 			roomMutex.Unlock()
 
 		case config.GET_INTO_ROM:
+			
 			createData := string(buf[4:])
 			createData = config.CompressStr(createData)
 			pos := strings.Index(createData, "/")
@@ -209,6 +210,7 @@ func HandleMsg(buf []byte, conn *net.UDPConn, rAddr *net.UDPAddr) {
 				client.clientAddr = rAddr
 				rom.clients = append(rom.clients, client)
 
+				_,_ = conn.WriteToUDP([]byte("1009"+userId), rAddr)
 				rooms[roomCode] = rom
 				roomMutex.Unlock()
 			} else {
