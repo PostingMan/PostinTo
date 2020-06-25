@@ -51,7 +51,18 @@ void Backend::read_msg(){
     case LOGIN_FAILED: emit loginF(); break;
     case SIGN_SUCCESS: emit signS(); break;
     case SIGN_FAILED: emit signF(); break;
-    case NEW_ROOM: emit getNewRoom(data.mid(4, -1)); break; /* -1 means returns all characters that are available from the position 4 */
+    case NEW_ROOM: {
+        //conn.WriteToUDP([]byte("1007"+roomCode+"/"+initCntS), rAddr)
+//        int flag = 0;
+//        for (int i = 4; i < data.length(); i++) {
+//            if(data[i] == '/') {
+//                flag = i;
+//            }
+//        }
+
+        /* -1 means returns all characters that are available from the position 4 */
+        emit getNewRoom(data.mid(4, -1)); break;
+    }
     case ROOM_FINISH: emit getRoomFinish(); break;
     case SHOWYEAR_CHAMPION: {
         int arr[3] = {0};
@@ -97,6 +108,7 @@ void Backend::read_msg(){
     }
     
     case MEMBER_IN: emit memberin(data.mid(4,-1)); break;
+    case GET_MEM_LIST: emit getMemList(data.mid(4, -1)); break;
     default: break;
     }
     

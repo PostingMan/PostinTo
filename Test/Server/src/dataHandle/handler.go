@@ -82,6 +82,7 @@ func HandleMsg(buf []byte, conn *net.UDPConn, rAddr *net.UDPAddr) {
 		}
 	}()
 	//获取前四位的信息类型编号
+	/* strconv.Atoi string ---> int */
 	data, err := strconv.Atoi(string(buf[0:4]))
 	checkErr(err)
 	//根据类型编号对应进行处理
@@ -196,6 +197,7 @@ func HandleMsg(buf []byte, conn *net.UDPConn, rAddr *net.UDPAddr) {
 				return
 			}
 			roomMutex.RLock()
+			/* 房间不存在就创建 */
 			if _, ok := rooms[roomCode]; !ok {
 				roomMutex.RUnlock()
 				roomMutex.Lock()
@@ -210,7 +212,6 @@ func HandleMsg(buf []byte, conn *net.UDPConn, rAddr *net.UDPAddr) {
 				client.clientAddr = rAddr
 				rom.clients = append(rom.clients, client)
 
-				_,_ = conn.WriteToUDP([]byte("1009"+userId), rAddr)
 				rooms[roomCode] = rom
 				roomMutex.Unlock()
 			} else {
@@ -226,6 +227,7 @@ func HandleMsg(buf []byte, conn *net.UDPConn, rAddr *net.UDPAddr) {
 				rooms[roomCode].memCnt++
 				roomMutex.Unlock()
 			}
+			_,_ = conn.WriteToUDP([]byte("1009"+userId), rAddr)
 			PrintStatus()
 
 		case config.QUIT_THE_ROOM:
@@ -281,10 +283,14 @@ func HandleMsg(buf []byte, conn *net.UDPConn, rAddr *net.UDPAddr) {
 			roomMutex.Lock() //加锁
 			PrintStatus()
 			for key, _ := range rooms {
+				//key 是 string 类型， 对应的 value 是 ChatRoom 类型
+				//client's 1007 是 NEW_ROOM
 				_, _ = conn.WriteToUDP([]byte("1007"+key), rAddr)
-				//fmt.Println(key)
+				fmt.Println(key)
 			}
 			roomMutex.Unlock() //解锁
+
+			/* client's 1008 is ROOM_FINISH */
 			_, _ = conn.WriteToUDP([]byte("1008"), rAddr)
 
 		case config.CREATE_ROOM:
@@ -292,8 +298,9 @@ func HandleMsg(buf []byte, conn *net.UDPConn, rAddr *net.UDPAddr) {
 			createData := string(buf[4:])
 			createData = config.CompressStr(createData)
 			pos := strings.Index(createData, "/")
-			roomCode := createData[0:pos]
-			userId   := createData[pos+1:]
+			
+			roomCode := createData[0:pos]	/* 房间号 */
+			userId   := createData[pos+1:]	/* 创建者id */
             if roomCode == "" {
             	return
 			}
@@ -327,7 +334,9 @@ func HandleMsg(buf []byte, conn *net.UDPConn, rAddr *net.UDPAddr) {
 				rooms[roomCode].memCnt++
 				roomMutex.Unlock()
 			}
-			
+			// initCntI := rooms[roomCode].memCnt
+			// initCntS := strconv.Itoa(initCntI)
+			// fmt.Println("roomCode is" + roomCode + " memCnt is " + initCntS)
 			/* client's 1007 is NEW_ROOM */
 			_, _ = conn.WriteToUDP([]byte("1007"+roomCode), rAddr)
 			PrintStatus()
@@ -352,6 +361,26 @@ func HandleMsg(buf []byte, conn *net.UDPConn, rAddr *net.UDPAddr) {
 			}
 
 		// case config.NEW_MEMBER_ENTER: 
+		
+		case config.REQ_MEM_LIST:
+			fmt.Println("Refreshing")
+			roomCode := string(buf[4:])
+			roomCode = config.CompressStr(roomCode)
+
+			/* 如果该房间存在， 获取该房间所有用户的用户名 */
+			if _, ok := rooms[roomCode]; ok {
+				
+				allmem := rooms[roomCode].clients
+				for _, member := range allmem {
+
+					_, _ = conn.WriteToUDP([]byte("1012"+member.name), rAddr)
+				}
+
+
+			}
+
+
+
 		default:
 			fmt.Println("Undefined message type!")
 			fmt.Println(rAddr, string(buf[4:]))

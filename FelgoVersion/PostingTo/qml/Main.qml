@@ -89,6 +89,7 @@ App {
     Component {id: loginP; LoginPage{}}
     Component {id: mainP;  MainPage{}}
     Component {id: chatP;  ChatPage{}}
+    Component {id: memberlistP; MemberList{}}
 
 
 
@@ -100,6 +101,7 @@ App {
     function pushStack(code) {
         switch(code){
         case 0: stack.push(chatP); break;
+        case 1: stack.push(memberlistP); break;
         default: break;
         }
     }

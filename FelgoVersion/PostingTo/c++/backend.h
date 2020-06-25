@@ -29,11 +29,12 @@ signals:
     void signF();
     void getChatMsg(QVariant id, QVariant msg, QVariant name, QVariant room);
     void clearRoom();
-    void getNewRoom(QVariant id);
+    void getNewRoom(QVariant roomid);
     void getRoomFinish();
     void getShowYearChampion(QVariant id, QVariant name, QVariant time, QVariant sygj);
     void memberAdd(QVariant roomid);
     void memberin(QVariant memid);
+    void getMemList(QVariant memname);
 
 private:
     QUdpSocket* m_socket;
@@ -49,9 +50,10 @@ private:
 
           MEMBER_IN,
           MEMBER_OUT,
-          SHOWYEAR_CHAMPION
+          SHOWYEAR_CHAMPION,
 
           /* new */
+          GET_MEM_LIST
 
 
 

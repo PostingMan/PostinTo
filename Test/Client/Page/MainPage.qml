@@ -16,7 +16,7 @@ Page {
         width: dp(10)
         height: width
         radius: width / 2
-        color: "blue"
+        color: "#00838F"
         anchors {
             top: parent.top
             left: parent.left
@@ -31,7 +31,7 @@ Page {
                 pixelSize: dp(6)
                 bold: true
             }
-            color: "black"
+            color: "#FFFFFF"
         }
     }
     
@@ -49,7 +49,7 @@ Page {
         Text {
             id: championTxt
             anchors.centerIn: parent
-            text: qsTr("我要变强👆")
+            text: qsTr("我要变强")
             font.pixelSize: parent.height * 0.4
             font.bold: true
         }
@@ -80,7 +80,7 @@ Page {
         Text {
             id: championView
             anchors.centerIn: parent
-            text: qsTr("昨日大佬👆")
+            text: qsTr("昨日大佬")
             font.pixelSize: parent.height * 0.4
             font.bold: true
         }

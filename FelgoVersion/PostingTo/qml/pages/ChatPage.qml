@@ -7,6 +7,7 @@ Page {
     id: chatP
     property alias _title:_title.text
     property var roomCode
+    property var memCnt
 
     background: Rectangle {color: "#40C4FF"}
     
@@ -22,7 +23,7 @@ Page {
         Text {
             id: _title
             anchors.centerIn: parent
-            text: "🌖  " + roomCode
+            text: "🌖  " + roomCode + " "+memCnt+" in"
             color: "#4b2e2b"
             font.pixelSize: dp(20)
             font.family: tintFnt
@@ -32,7 +33,8 @@ Page {
         Image {
             id: popIco
             source: "../../assets/mdpi/ic_arrow_back.png"
-            height: parent.height * 0.8
+            height: parent.height * 0.6
+
             anchors{
                 left: parent.left
                 leftMargin: dp(8)
@@ -49,6 +51,28 @@ Page {
                 }
             }
         }
+
+        Image {
+            id: listIco
+            source: "../../assets/mdpi/ic_more_w.png"
+            height: parent.height * 0.8
+            anchors{
+                right: parent.right
+                rightMargin: dp(8)
+                verticalCenter: parent.verticalCenter
+            }
+            fillMode: Image.PreserveAspectFit
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    root.pushStack(1)
+                    stack.currentItem.roomid = roomCode
+                    // backend.send_message_test("1010" + roomCode)
+
+                }
+            }
+
+        }
         
     }
 
@@ -58,7 +82,7 @@ Page {
         id: view
         Text {
             id: titles
-            text: qsTr("chachacha")
+            //text: qsTr("chachacha")
             anchors.top: parent.top
             anchors.horizontalCenter: parent.horizontalCenter
         }

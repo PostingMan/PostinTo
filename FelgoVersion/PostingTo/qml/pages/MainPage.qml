@@ -4,6 +4,8 @@ import QtQuick.Controls 2.12
 Page {
     id: mainP
 
+
+
     //bk
     Rectangle {
         anchors.fill: parent
@@ -142,7 +144,7 @@ Page {
                     onClicked: getIntoRoom(modelData)
                 }
             }
-            /* 1007 -> NEW_ROOM(Request room information)  */
+            /* server's 1007 -> (REQ_ROOM_INFO) Request room information */
             Component.onCompleted: backend.send_message_test("1007")
         }
     }
@@ -176,7 +178,7 @@ Page {
                 flashAni.start()
                 timeOutT.start()
 
-                /* 1007 -> NEW_ROOM(Request room information)  */
+                /* server's 1007 -> REQ_ROOM_INFO  */
                 backend.send_message_test("1007")
                 root.showChip("刷新中~")
                 roomodel.clear()
@@ -231,20 +233,24 @@ Page {
             /* join-in */
             if(pd) {
                 input.focus = false
+
+                /* server's 1005 ---> GET_INTO_ROM  */
                 backend.send_message_test("1005" + input.text + "/" + userId)
                 root.pushStack(0)
                 stack.currentItem.roomCode = input.text
                 input.text = ""
+                showChip("get into room")
             }
             else {
                 /* create */
                 input.focus = false
 
-                /* 1003 ---> CREATE_ROOM */
+                /* server's 1003 ---> CREATE_ROOM */
                 backend.send_message_test("1003" + input.text + "/" + userId)
-                showChip(userId+"create a room")
+                showChip(userId+" create a room")
                 root.pushStack(0)
                 stack.currentItem.roomCode = input.text
+                stack.currentItem.memCnt = "1"
                 input.text = ""
             }
         }
@@ -472,6 +478,9 @@ Page {
             flashAni.stop()
             flash.rotation = 0;
             root.showChip("更新成功!")
+        }
+        onMemBerIn: {
+            // whogetin = memid
         }
     }
 
