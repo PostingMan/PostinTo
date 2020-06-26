@@ -472,16 +472,16 @@ Page {
     Connections {
         target: backend
         onGetNewRoom: {
-            roomodel.append({modelData: id})
+            roomodel.append({modelData: roomid})
         }
         onGetRoomFinish: {
             flashAni.stop()
             flash.rotation = 0;
             root.showChip("更新成功!")
         }
-        onMemBerIn: {
-            // whogetin = memid
-        }
+//        onMemBerIn: {
+//            // whogetin = memid
+//        }
     }
 
     Connections {

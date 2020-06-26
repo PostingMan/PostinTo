@@ -34,9 +34,6 @@ Page {
                 anchors.fill: parent
                 onClicked: {
                     stack.pop()
-                    root.backPress()
-                    //backend.send_message_test("1006" + userId + "/" + roomCode)
-                    //backend.send_message_test("1007")
                 }
             }
         }
@@ -51,6 +48,7 @@ Page {
         width: parent.width * 0.7
         height: parent.height * 0.5
         color: "#555555"
+        opacity: 0.7
         Text {
             text: qsTr("...some peoples ...")
             color: "white"
@@ -79,11 +77,12 @@ Page {
                     anchors.centerIn: parent
                     text: parent.mems
                     font.pixelSize: parent.height * 0.6
+                    color: "black"
                 }
 
             }
             /* server's 1010 is REQ_MEM_LIST */
-            Component.onCompleted: backend.send_message_test("1010"+roomid)
+            // Component.onCompleted: backend.send_message_test("1010"+roomid)
         }
 
     }

@@ -363,21 +363,38 @@ func HandleMsg(buf []byte, conn *net.UDPConn, rAddr *net.UDPAddr) {
 		// case config.NEW_MEMBER_ENTER: 
 		
 		case config.REQ_MEM_LIST:
-			fmt.Println("Refreshing")
+			roomMutex.Lock()
+			fmt.Println("request member list")
 			roomCode := string(buf[4:])
 			roomCode = config.CompressStr(roomCode)
+			fmt.Println("roomCode is " + roomCode)
 
+			for key, _ := range rooms {
+				fmt.Println("the rooms")
+				fmt.Println(key)
+			}
 			/* 如果该房间存在， 获取该房间所有用户的用户名 */
 			if _, ok := rooms[roomCode]; ok {
 				
+				fmt.Println(rooms[roomCode].clients[0].id) //will be ok
 				allmem := rooms[roomCode].clients
 				for _, member := range allmem {
-
-					_, _ = conn.WriteToUDP([]byte("1012"+member.name), rAddr)
+					
+					fmt.Println("the member name is ")
+					//fmt.Println(member.name)
+					name := GetUserNameQuery(member.id)
+					_, _ = conn.WriteToUDP([]byte("1012"+name), rAddr)
+					fmt.Println("in room " + roomCode)
+					
 				}
 
 
+			} else {
+				fmt.Println("没有...")
+
 			}
+			roomMutex.Unlock()
+
 
 
 

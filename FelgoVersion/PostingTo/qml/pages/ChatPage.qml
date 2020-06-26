@@ -47,6 +47,7 @@ Page {
                     stack.pop()
                     root.backPress()
                     //backend.send_message_test("1006" + userId + "/" + roomCode)
+                    /* server's 1007 is REQ_ROOM_INFO */
                     backend.send_message_test("1007")
                 }
             }
@@ -67,7 +68,11 @@ Page {
                 onClicked: {
                     root.pushStack(1)
                     stack.currentItem.roomid = roomCode
-                    // backend.send_message_test("1010" + roomCode)
+
+                    showChip(roomCode)
+                    backend.send_message_test("1010" + roomCode)
+                    //send2S()
+
 
                 }
             }
@@ -231,9 +236,9 @@ Page {
                 view.positionViewAtEnd()
             }
         }
-        onMemBerIn: {
-            showChip(memid+" coming~")
-        }
+//        onMemBerIn: {
+//            showChip(memid+" coming~")
+//        }
 
     }
     
@@ -246,4 +251,5 @@ Page {
         view.positionViewAtEnd()
 
     }
+
 }
