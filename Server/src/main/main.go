@@ -3,8 +3,10 @@ package main
 import (
    "../config"
    "../dataHandle"
+   "../logo"
    "fmt"
    "net"
+   
 )
 
 func NewMessage(conn *net.UDPConn, n int, rAddr *net.UDPAddr, buf []byte, err error) {
@@ -14,13 +16,14 @@ func NewMessage(conn *net.UDPConn, n int, rAddr *net.UDPAddr, buf []byte, err er
    }
    config.PrintTime()
    dataHandle.HandleMsg(buf[:n], conn, rAddr)
-	//_, _ = conn.WriteToUDP([]byte(string(buf[0:4])+" Message Received!"), rAddr) // 简单回写数据给客户端
+	//_, _ = conn.WriteToUDP([]byte(string(buf[0:4])+" Message Received!"), rAddr) // 回写数据给客户端
 }
 
 var Running bool
 
 func main() {
-   fmt.Println("...PostingTo Server Running...")
+   // fmt.Println("...PostingTo Server Running...")
+   logo.Printlogo()
    Running = true
    
    /* data base */
