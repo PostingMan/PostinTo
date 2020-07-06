@@ -1,3 +1,6 @@
+/*
+ * - 自定义了一系列按键事件
+ */
 #ifndef KEYFILTER_H
 #define KEYFILTER_H
 
@@ -11,6 +14,7 @@ public:
 
     static KeyFilter* GetInstance();
     explicit KeyFilter(QObject *parent = nullptr);
+
     //设置过滤对象
     void SetFilter(QObject *obj);
 protected:

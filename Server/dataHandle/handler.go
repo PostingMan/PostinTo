@@ -1,14 +1,12 @@
 package dataHandle
 
 import (
-	_ "../chain"
-	_ "../chatRoom"
 	"../config"
 	_ "../mysql"
 	"database/sql"
 	"fmt"
-	"net"
-	"strconv"
+	"net"               /* 网络相关包 */
+	"strconv"           /* 字符串与数字转换 */
 	"strings"
 	"sync"  			/* 互斥锁/读写锁 */
 	"time"
@@ -30,7 +28,7 @@ type ChatRoom struct {
 }
 
 var (
-	dbhostip     = 	  "127.0.0.1:3306" //db port
+	dbhostip     = 	  "127.0.0.1:3306"
 	dbusername   = 	  "root"
 	dbpassword   = 	  "root"
 	dbname 		 =    "mysql"
@@ -45,12 +43,13 @@ var roomMutex   sync.RWMutex
 var rooms 		map[string] *ChatRoom
 var roomCnt 	int
 
-//错误检查Panic
+//错误检测，若检测到错误，程序会立刻停止运行
 func checkErr(err error){
 	if err!=nil {
 		panic(err)
 	}
 }
+
 //关闭数据库连接
 func Close() {
 	fmt.Println("Closing MySQL")
@@ -58,6 +57,7 @@ func Close() {
 	checkErr(err)
 	fmt.Println("MySQL Closed")
 }
+
 //连接数据库
 func Connect() {
 	var err error
@@ -69,10 +69,9 @@ func Connect() {
 	rooms   = make(map[string] *ChatRoom)
 	fmt.Println(db.Stats())
 	fmt.Println("connect db ok")
-	// rooms = make(map[string] *chatRoom.ChatRoom)
-	// fmt.Println(rooms)
 
 }
+
 //处理客户端发来的信息
 func HandleMsg(buf []byte, conn *net.UDPConn, rAddr *net.UDPAddr) {
 	fmt.Println("---begin handleMsg---")
@@ -81,12 +80,15 @@ func HandleMsg(buf []byte, conn *net.UDPConn, rAddr *net.UDPAddr) {
 			fmt.Println(errs)
 		}
 	}()
+
 	//获取前四位的信息类型编号
 	/* strconv.Atoi string ---> int */
 	data, err := strconv.Atoi(string(buf[0:4]))
 	checkErr(err)
+
 	//根据类型编号对应进行处理
 	switch data {
+		/* 响应客户端启动事件 */
 		case config.START_CODE:
 			fmt.Println("Client start")
 			defer func() {
@@ -95,6 +97,7 @@ func HandleMsg(buf []byte, conn *net.UDPConn, rAddr *net.UDPAddr) {
 				}
 			}()
 
+		/* 响应用户登录事件 */
 		case config.LOGIN_CODE:
 			fmt.Println("Somebody is trying to Login")
 			loginData := string(buf[4:])
@@ -113,17 +116,6 @@ func HandleMsg(buf []byte, conn *net.UDPConn, rAddr *net.UDPAddr) {
 			if flag == config.LOGIN_SUCCESS {
 				fmt.Println("Login Success")
 				userMutex.RLock()
-				//if _, ok := userCon[id]; !ok {
-				//	userMutex.RUnlock()
-				//	userMutex.Lock()
-				//	userCon[id] = true
-				//	userCnt++
-				//	userMutex.Unlock()
-				//} else {
-				//	userMutex.RUnlock()
-				//}
-
-				/*  8100 ---> LOGIN_SUCCESS  */
 				bitMsg := []byte("8100") 
 				_, _ = conn.WriteToUDP(bitMsg, rAddr)
 
@@ -135,6 +127,7 @@ func HandleMsg(buf []byte, conn *net.UDPConn, rAddr *net.UDPAddr) {
 			}
 			PrintStatus()
 
+		/* 响应用户注册事件 */
 		case config.SIGNIN_CODE:
 			fmt.Println("Somebody is trying to Sign In")
 			loginData := string(buf[4:])
@@ -158,7 +151,8 @@ func HandleMsg(buf []byte, conn *net.UDPConn, rAddr *net.UDPAddr) {
 				res, err := conn.WriteToUDP(bitMsg, rAddr)
 				fmt.Println(res, err)
 			}
-
+		
+		/* 响应用户发聊天消息事件 */
 		case config.GET_MSG_CODE:
 			roomMutex.Lock()
 
@@ -186,6 +180,7 @@ func HandleMsg(buf []byte, conn *net.UDPConn, rAddr *net.UDPAddr) {
 			//roomMutex.RUnlock()
 			roomMutex.Unlock()
 
+		/* 响应用户加入房间事件 */
 		case config.GET_INTO_ROM:
 			
 			createData := string(buf[4:])
@@ -230,6 +225,7 @@ func HandleMsg(buf []byte, conn *net.UDPConn, rAddr *net.UDPAddr) {
 			_,_ = conn.WriteToUDP([]byte("1009"+userId), rAddr)
 			PrintStatus()
 
+		/* 响应用户退出房间事件，若房间内无用户则关闭该房间 */
 		case config.QUIT_THE_ROOM:
 			//defer func() {
 			//	if errs := recover(); errs != nil{
@@ -278,6 +274,7 @@ func HandleMsg(buf []byte, conn *net.UDPConn, rAddr *net.UDPAddr) {
 			PrintStatus()
 			roomMutex.Unlock()
 
+		/* 响应用户刷新房间信息事件，返回当前存在的所有房间号码 */
 		case config.REQ_ROOM_INFO:
 			fmt.Println("Refreshing")
 			roomMutex.Lock() //加锁
@@ -293,6 +290,7 @@ func HandleMsg(buf []byte, conn *net.UDPConn, rAddr *net.UDPAddr) {
 			/* client's 1008 is ROOM_FINISH */
 			_, _ = conn.WriteToUDP([]byte("1008"), rAddr)
 
+		/* 响应创建房间事件 */
 		case config.CREATE_ROOM:
 
 			createData := string(buf[4:])
@@ -341,6 +339,7 @@ func HandleMsg(buf []byte, conn *net.UDPConn, rAddr *net.UDPAddr) {
 			_, _ = conn.WriteToUDP([]byte("1007"+roomCode), rAddr)
 			PrintStatus()
 
+		/* 响应用户打卡事件 */
 		case config.SET_SHOWYEAR:
 			Data := string(buf[4:])
 			Data = config.CompressStr(Data)
@@ -349,6 +348,7 @@ func HandleMsg(buf []byte, conn *net.UDPConn, rAddr *net.UDPAddr) {
 			sygj   := Data[pos+1:]
 			SygjQuery(id, sygj)
 
+		/* 响应用户查看谁是冠军（当天最晚打卡的用户）事件 */
 		case config.GET_SHOWYEAR:
 			t := config.GetCurTime()
 			t = t[0:2]
@@ -359,9 +359,8 @@ func HandleMsg(buf []byte, conn *net.UDPConn, rAddr *net.UDPAddr) {
 				id, sygj, tim := GetSygjQuery(time.Now().AddDate(0,0,-1).Format("2006-01-02 15:04:05")[0:10])
 				_, _ = conn.WriteToUDP([]byte("1011"+id+"/"+GetUserNameQuery(id)+"/"+tim+"/"+sygj), rAddr)
 			}
-
-		// case config.NEW_MEMBER_ENTER: 
 		
+		/* 响应用户查看房间用户事件 */
 		case config.REQ_MEM_LIST:
 			roomMutex.Lock()
 			fmt.Println("request member list")
@@ -408,7 +407,8 @@ func HandleMsg(buf []byte, conn *net.UDPConn, rAddr *net.UDPAddr) {
 
 /* 操作数据库 */
 
-/* 查询登录人信息，若 id 与密码都与数据库中相匹配
+/* 
+ * 查询登录人信息，若 id 与密码都与数据库中相匹配
  * 则返回 LOGIN_SUCCESS，否则返回 LOGIN_FAILED
  */
 func LoginQuery(id string, nickname string, psw string)(flag int) {
@@ -436,7 +436,8 @@ func LoginQuery(id string, nickname string, psw string)(flag int) {
 
 }
 
-/* 用户注册操作，若 id 在 MYSQL 的 users 表中不存在
+/* 
+ * 用户注册操作，若 id 在 MYSQL 的 users 表中不存在
  * 则将相关信息插入 users 表中，成功返回 SIGNIN_SUCCESS
  * 否则用户存在，返回 SIGNIN_FAILED
  */

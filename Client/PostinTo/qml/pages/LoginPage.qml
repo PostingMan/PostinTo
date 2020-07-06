@@ -1,11 +1,13 @@
 import Felgo 3.0
 import QtQuick 2.12
-
+import QtQuick.Controls 2.12
 import "../components"
 
 Page {
     id: loginPage
     title: qsTr("Login")
+    //bk color or img
+    background: Rectangle {color: "white"}
 
     Column {
         id: header
@@ -18,12 +20,13 @@ Page {
         spacing: dp(5)
 
         AppText {
-          text: "PostingTo"
-          font.pixelSize: sp(30)
+          text: "PostinTo"
+          font.pixelSize: sp(35)
+          color: "#7B1FA2"
           font.bold: true
         }
         AppText {
-            text: "\"post what you want to someone\""
+            text: "\"Keep in touch\""
             font.pixelSize: sp(10)
         }
 
@@ -39,7 +42,7 @@ Page {
         AppTextField {
             id: userCode
             width: parent.width
-            placeholderText: "Pos ID"
+            placeholderText: "ID"
             validator: RegExpValidator {regExp: /^[0-9]*$/}
 
         }
@@ -104,7 +107,7 @@ Page {
             root.setVal(userCode.text, userId.text, userPsw.text)
         }
         else {
-            showChip("没填完整我mysql拿头给您登录？")
+            showChip("请完善信息!")
         }
     }
 
@@ -116,7 +119,7 @@ Page {
             /* 1002 ---> SIGNIN_CODE */
             backend.send_message_test("1002" + logData)
         }
-        else root.showChip("没填完整我mysql拿头给您注册？")
+        else root.showChip("信息完整才能注册哦～")
     }
 
     Component.onCompleted: {

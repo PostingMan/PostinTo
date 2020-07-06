@@ -1,3 +1,7 @@
+/*
+ * - 定义了向服务端发送报文的方法
+ * - 定义了一系列接收报文信息
+ */
 #ifndef BACKEND_H
 #define BACKEND_H
 
@@ -5,8 +9,7 @@
 #include <QUdpSocket>
 #include <QHostAddress>
 
-//using namespace std;
-
+/* 自定义UDP端口号 */
 const int port = 8848;
 
 class Backend : public QObject {
@@ -47,16 +50,12 @@ private:
           QUIT_THE_ROOM,
           NEW_ROOM,
           ROOM_FINISH,
-
           MEMBER_IN,
           MEMBER_OUT,
           SHOWYEAR_CHAMPION,
 
           /* new */
           GET_MEM_LIST
-
-
-
 
          };
     

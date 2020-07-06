@@ -4,7 +4,6 @@ import QtQuick 2.12
 import Qt.labs.settings 1.1
 
 import "components"
-import "logic"
 import "pages"
 
 App {
@@ -137,7 +136,7 @@ App {
 
         onWelcome: showChip("-----PostingTo server is open-----")
         onLoginS: {
-            showChip("Login Succeed")
+            // showChip("Login Succeed")
             login()
         }
         onLoginF: showChip("Login Failed")

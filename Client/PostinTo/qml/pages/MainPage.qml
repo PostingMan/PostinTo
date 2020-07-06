@@ -4,6 +4,26 @@ import QtQuick.Controls 2.12
 Page {
     id: mainP
 
+    header: Rectangle{
+        // anchors.top: parent.top
+        anchors.topMargin: dp(10)
+
+
+        color:  Theme.colors.tintColor
+        width: parent.width
+        height: dp(80)
+        Text {
+            id: _title
+            anchors.centerIn: parent
+            text: "🌖  PostinTo"
+            color: "white"
+            font.pixelSize: dp(20)
+            font.family: tintFnt
+        }
+
+
+    }
+
 
 
     //bk
@@ -78,8 +98,9 @@ Page {
         color: "#555555"
         opacity: 0
         Text {
-            text: qsTr("...some rooms ...")
+            text: qsTr("...Some rooms ...")
             color: "white"
+            font.pixelSize: dp(15)
             anchors.top: parent.top
             anchors.horizontalCenter: parent.horizontalCenter
         }
@@ -135,7 +156,7 @@ Page {
                 radius: 5
                 Text {
                     anchors.centerIn: parent
-                    text: "[" + parent.roomCod + "]"
+                    text: "[ " + parent.roomCod + " ]"
                     font.family: "Agency FB Negreta"
                     font.pixelSize: parent.height * 0.6
                 }

@@ -1,3 +1,4 @@
+/* 打印logo */
 package logo
 
 import ( "fmt" )

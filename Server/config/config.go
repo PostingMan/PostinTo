@@ -1,3 +1,7 @@
+/* - 定义了消息报文 
+ * - 定义了压缩报文的方法
+ * - 定义了打印日期的方法
+ */
 package config
 
 import (
@@ -20,7 +24,7 @@ const (
 	GET_SHOWYEAR   = 1009
 
 	REQ_MEM_LIST   = 1010
-	// NEW_MEMBER_ENTER = 1012
+
 )
 
 /* 登录/注册状态码 */
@@ -71,3 +75,4 @@ func checkErr(err error){
 	}
 }
 
+ 

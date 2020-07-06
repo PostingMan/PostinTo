@@ -6,7 +6,6 @@ import (
    "../logo"
    "fmt"
    "net"
-   
 )
 
 func NewMessage(conn *net.UDPConn, n int, rAddr *net.UDPAddr, buf []byte, err error) {
@@ -16,31 +15,31 @@ func NewMessage(conn *net.UDPConn, n int, rAddr *net.UDPAddr, buf []byte, err er
    }
    config.PrintTime()
    dataHandle.HandleMsg(buf[:n], conn, rAddr)
-	//_, _ = conn.WriteToUDP([]byte(string(buf[0:4])+" Message Received!"), rAddr) // 回写数据给客户端
 }
 
-var Running bool
 
 func main() {
-   // fmt.Println("...PostingTo Server Running...")
+
    logo.Printlogo()
-   Running = true
    
    /* data base */
+   /*
+    * - defer: 在语句前声明关键字 defer 后
+    * 在函数执行到最后时会逆序执行之前
+    * 用 defer 声明的语句
+    */
    dataHandle.Connect()
    defer dataHandle.Close()
-
-   /* 创建通道 */
-   syncChan := make(chan struct{}, 1)
    
    lAddr, err := net.ResolveUDPAddr("udp", "0.0.0.0:8848")
    if err != nil {
       fmt.Println("ResolveUDPAddr err:", err)
       return
    }
-   /* 监听客户端 */
-   conn, err := net.ListenUDP("udp", lAddr)
 
+   /* 监听发送到本地地址 lAddr 的UDP数据包 */
+   conn, err := net.ListenUDP("udp", lAddr)
+   
    if err != nil {
       fmt.Println("net.ListenUDP err:", err)
       return
@@ -51,19 +50,9 @@ func main() {
       buf := make([]byte, 2048)
       n, rAddr, err := conn.ReadFromUDP(buf)
 
-      /* 并发 */
+      /* 并发地处理各个客户端发来的消息 */
       go NewMessage(conn, n, rAddr, buf, err)
-      if !Running {
-      	syncChan <- struct{}{}
-      	break
-      }
       
    }
 
-   /* 执行该语句时将会发生阻塞，直到接收到数据，
-    * 但接收到的数据会被忽略。
-    * 这个方式实际上只是通过通道在 goroutine 
-    * 间阻塞收发实现并发同步。 
-    */
-	<-syncChan
 }

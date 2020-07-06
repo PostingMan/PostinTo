@@ -7,7 +7,7 @@ Page {
     id: chatP
     property alias _title:_title.text
     property var roomCode
-    property var memCnt
+    // property var memCnt
 
     background: Rectangle {color: "#40C4FF"}
     
@@ -17,14 +17,14 @@ Page {
         anchors.topMargin: dp(10)
 
 
-        color:  Theme.colors.tintLightColor
+        color:  Theme.colors.tintColor
         width: parent.width
         height: dp(60)
         Text {
             id: _title
             anchors.centerIn: parent
-            text: "🌖  " + roomCode + " "+memCnt+" in"
-            color: "#4b2e2b"
+            text: "🌖  " + roomCode
+            color: "white"
             font.pixelSize: dp(20)
             font.family: tintFnt
         }
@@ -185,19 +185,19 @@ Page {
             left: parent.left
             leftMargin: dp(6)
         }
-        background: Rectangle {color: "#eeeeee"; radius: dp(2)}
+        background: Rectangle {color: "#eeeeee"; radius: dp(8)}
         font.pixelSize: dp(20)
     }
 
     AppButton {
         anchors{
-            right: parent.right
+            left: parent.left
+            leftMargin: dp(320)
             bottom: parent.bottom
-            rightMargin: dp(6)
             bottomMargin: dp(15)
         }
-        width: parent.width * 0.2
-        radius: dp(3)
+        width: dp(20)
+        radius: dp(8)
         height: input.height
         onClicked: {
             if (input.text != ""){

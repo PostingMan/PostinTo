@@ -3,7 +3,6 @@
 Backend::Backend(QObject *parent) : QObject(parent){}
 
 void Backend::init(){
-
     m_socket = new QUdpSocket();
 
     /* sure must be any */
@@ -13,7 +12,6 @@ void Backend::init(){
 
 }
 
-
 /*
  * 向服务端发送请求报文，服务端对不同的请求作出对应的响应
  */
@@ -21,7 +19,6 @@ void Backend::send_message_test(QVariant msg){
     QByteArray message = msg.toString().toUtf8();
     qint64 ret;
     ret = m_socket->writeDatagram(message, QHostAddress("39.97.118.39"), port);
-
 
     if(ret == -1) {
         qDebug() << "send message faild";
@@ -34,10 +31,8 @@ void Backend::send_message_test(QVariant msg){
 }
 
 void Backend::read_msg(){
-    
-    /* 此处更正为handle Msg！ */
     QString data;
-    /* dat 接收8848端口的数据 */
+    /* dat 接收UDP端口的数据 */
     char dat[1024] = "";
     m_socket->readDatagram(dat, 1024);
     data = dat;
@@ -51,18 +46,8 @@ void Backend::read_msg(){
     case LOGIN_FAILED: emit loginF(); break;
     case SIGN_SUCCESS: emit signS(); break;
     case SIGN_FAILED: emit signF(); break;
-    case NEW_ROOM: {
-        //conn.WriteToUDP([]byte("1007"+roomCode+"/"+initCntS), rAddr)
-//        int flag = 0;
-//        for (int i = 4; i < data.length(); i++) {
-//            if(data[i] == '/') {
-//                flag = i;
-//            }
-//        }
+    case NEW_ROOM: emit getNewRoom(data.mid(4, -1)); break;
 
-        /* -1 means returns all characters that are available from the position 4 */
-        emit getNewRoom(data.mid(4, -1)); break;
-    }
     case ROOM_FINISH: emit getRoomFinish(); break;
     case SHOWYEAR_CHAMPION: {
         int arr[3] = {0};
