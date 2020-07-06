@@ -7,7 +7,7 @@ QT += network quick
 
 # Project identifier and version
 # More information: https://felgo.com/doc/felgo-publishing/#project-configuration
-PRODUCT_IDENTIFIER = com.PostingMan.felgoV.PostingTo
+PRODUCT_IDENTIFIER = com.PostingMan.felgoV.PostinTo
 PRODUCT_VERSION_NAME = 1.0.0
 PRODUCT_VERSION_CODE = 1
 

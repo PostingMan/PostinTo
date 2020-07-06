@@ -9,7 +9,7 @@ Page {
         anchors.topMargin: dp(10)
         color:  Theme.colors.tintLightColor
         width: parent.width
-        height: dp(60)
+        height: dp(90)
 
         Text {
             //id: _title
@@ -24,10 +24,13 @@ Page {
             id: popIco
             source: "../../assets/mdpi/ic_arrow_back.png"
             height: parent.height * 0.8
+            width: dp(15)
             anchors{
                 left: parent.left
                 leftMargin: dp(8)
-                verticalCenter: parent.verticalCenter
+                // verticalCenter: parent.verticalCenter
+                bottom: parent.bottom
+                bottomMargin: dp(5)
             }
             fillMode: Image.PreserveAspectFit
             MouseArea {

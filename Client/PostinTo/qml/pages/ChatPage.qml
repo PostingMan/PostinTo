@@ -19,7 +19,7 @@ Page {
 
         color:  Theme.colors.tintColor
         width: parent.width
-        height: dp(60)
+        height: dp(90)
         Text {
             id: _title
             anchors.centerIn: parent
@@ -34,11 +34,15 @@ Page {
             id: popIco
             source: "../../assets/mdpi/ic_arrow_back.png"
             height: parent.height * 0.6
+            width: dp(15)
 
             anchors{
                 left: parent.left
                 leftMargin: dp(8)
-                verticalCenter: parent.verticalCenter
+                //verticalCenter: parent.verticalCenter
+                bottom: parent.bottom
+                bottomMargin: dp(5)
+
             }
             fillMode: Image.PreserveAspectFit
             MouseArea {
@@ -60,7 +64,9 @@ Page {
             anchors{
                 right: parent.right
                 rightMargin: dp(8)
-                verticalCenter: parent.verticalCenter
+                // verticalCenter: parent.verticalCenter
+                bottom: parent.bottom
+                bottomMargin: dp(5)
             }
             fillMode: Image.PreserveAspectFit
             MouseArea {
@@ -178,10 +184,10 @@ Page {
     TextArea {
         id: input
         width: parent.width * 0.7
-        height: Math.min(Math.max(dp(8), text.height), text.height * 6);
+        height: Math.min(Math.max(dp(8), text.height), text.height * 6) + dp(5);
         anchors {
             bottom: parent.bottom
-            bottomMargin: dp(15)
+            bottomMargin: dp(20)
             left: parent.left
             leftMargin: dp(6)
         }
@@ -192,11 +198,11 @@ Page {
     AppButton {
         anchors{
             left: parent.left
-            leftMargin: dp(320)
+            leftMargin: parent.width * 0.715
             bottom: parent.bottom
-            bottomMargin: dp(15)
+            bottomMargin: dp(20)
         }
-        width: dp(20)
+        // width: dp(5)
         radius: dp(8)
         height: input.height
         onClicked: {

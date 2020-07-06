@@ -11,7 +11,7 @@ Page {
 
         color:  Theme.colors.tintColor
         width: parent.width
-        height: dp(80)
+        height: dp(90)
         Text {
             id: _title
             anchors.centerIn: parent

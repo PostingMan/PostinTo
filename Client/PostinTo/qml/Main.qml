@@ -36,12 +36,14 @@ App {
     Connections{
         target: keyFilter
         onSig_KeyBackPress:{
-            if (stack.depth > 1){
+            if (stack.depth == 2){
                 root.backPress()
                 stack.pop()
                 backend.send_message_test("1007")
-            }
-            else if(!_quit){
+            } else if (stack.depth >= 3) {
+                root.backPress()
+                stack.pop()
+            } else if(!_quit){
                 quitTimer.start()
                 _quit = true
                 root.showChip("再次点击返回键退出")
