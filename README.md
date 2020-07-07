@@ -50,8 +50,8 @@
 
 - [项目详细说明]()  :  尚未完成
 - [代码规范](Notes/codesimple.md)
-- [服务端相关配置]() ： 尚未完成
-- [参考与致谢](Notes/reference.md)
+- [服务端相关配置](Notes/ECS-Config.md) 
+- [参考](Notes/reference.md)
 
 
 
