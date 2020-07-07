@@ -1,8 +1,14 @@
 #                             PostinTo 
 
-<img src="img/bigpic.png" alt="outlook" style="zoom: 67%;" />
+<img src="img/intro.png" alt="intro" style="zoom:67%;" />
 
 
+
+​                                               🙏tips: 由于众所周知的原因，可能会出现图片无法加载的情况，请访问：[我们位于码云上的仓库](https://gitee.com/jaywhen/PostinTo)
+
+------------
+
+## 简述
 
 > PostinTo 是一款客户端使用 Qt + Felgo 开发，服务端使用 Golang 开发的跨多端（`windows`, `linux`, `macos`, `Android`, `ios`）的聊天室应用
 
@@ -16,10 +22,6 @@
     \|__|      \|_______||\_________\    \|__|   \|__| \|__| \|__|     \|__|   \|_______|
                          \|_________|                                                    
 ```
-
-
-
-## 简述
 
 ![交互逻辑图](img/conver.jpg)
 
@@ -47,7 +49,7 @@
 ## 进一步了解
 
 - [项目详细说明]()
-- [代码规范]()
+- [代码规范](Notes/codesimple.md)
 - [服务端相关配置]()
 - [参考与致谢]()
 
