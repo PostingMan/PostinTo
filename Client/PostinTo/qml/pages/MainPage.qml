@@ -61,7 +61,7 @@ Page {
     }
     AppButton {
         id: beChampion
-        text: "want C"
+        text: "clock in"
         anchors.left: user.right
         anchors.verticalCenter: user.verticalCenter
         anchors.margins: dp(25)
@@ -81,7 +81,7 @@ Page {
             rightMargin: dp(10)
         }
         id: seeChampion
-        text: "Y C"
+        text: "Rank"
         onClicked: {
             root.showMask()
             championPage.createObject(root)
@@ -348,7 +348,7 @@ Page {
                                 font{
                                     pixelSize: dp(3.5)
                                     bold: true
-                                    family: "微软雅黑"
+
                                 }
                             }
                         }
@@ -442,7 +442,6 @@ Page {
                         clip: true
                         anchors.fill: parent
                         font {
-                            family: "微软雅黑"
                             pixelSize: height * 0.6
                         }
                         maximumLength: 15
@@ -500,9 +499,6 @@ Page {
             flash.rotation = 0;
             root.showChip("更新成功!")
         }
-//        onMemBerIn: {
-//            // whogetin = memid
-//        }
     }
 
     Connections {

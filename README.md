@@ -48,10 +48,14 @@
 
 ## 进一步了解
 
-- [项目详细说明](chatApp.pptx) 
+- [项目详细说明](group-21-App.pptx) 
 - [代码规范](Notes/codesimple.md)
 - [服务端相关配置](Notes/ECS-Config.md) 
 - [参考](Notes/reference.md)
 
 
+
+## Android安装包下载
+
+[.apk包下载](https://github.com/PostingMan/PostinTo/releases/tag/v1.2.0-stable)
 
