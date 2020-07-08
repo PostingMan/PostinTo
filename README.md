@@ -4,7 +4,9 @@
 
 
 
- 🙏tips: 由于众所周知的原因，可能会出现图片无法加载的情况，请访问：[我们位于码云上的仓库](https://gitee.com/jaywhen/PostinTo)
+简体中文 | [English](R3ADME-en.md)
+
+🙏tips: 由于众所周知的原因，可能会出现图片无法加载的情况，请访问：[我们位于码云上的仓库](https://gitee.com/jaywhen/PostinTo)
 
 ------------
 
