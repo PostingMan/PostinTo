@@ -2,6 +2,7 @@
 ## 参考文档\网页\在线 `UML`
 
 - [Felgo官方文档](https://felgo.com/doc/apps/)
+- [QmlBook-In-Chinese](https://github.com/cwc1987/QmlBook-In-Chinese)
 - [编译 apk 包](https://www.cnblogs.com/Jaywhen-xiang/p/12672449.html)
 - [Go 包文档](http://docscn.studygolang.com/pkg/)
 - [Go-sql-driver](https://github.com/go-sql-driver/mysql)
