@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Postinto by PostingMan</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-dark.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Postinto</h1>
+        <p>A simple chatroom app</p>
+        <p class="view"><a href="https://github.com/PostingMan/PostinTo">View the Project on GitHub <small>PostingMan/PostinTo</small></a></p>
+        <ul>
+          <li><a href="https://github.com/PostingMan/PostinTo/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/PostingMan/PostinTo/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/PostingMan/PostinTo">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a id="postinto" class="anchor" href="#postinto" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>PostinTo</h1>
+<img src="img/intro.png" alt="intro">
+<p>简体中文 | <a href="R3ADME-en.md">English</a></p>
+<p><g-emoji class="g-emoji" alias="pray" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/1f64f.png">🙏</g-emoji>tips: 由于众所周知的原因，可能会出现图片无法加载的情况，请访问：<a href="https://gitee.com/jaywhen/PostinTo">我们位于码云上的仓库</a></p>
+<hr>
+<h2>
+<a id="简述" class="anchor" href="#%E7%AE%80%E8%BF%B0" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>简述</h2>
+<blockquote>
+<p>PostinTo 是一款客户端使用 Qt + Felgo 开发，服务端使用 Golang 开发的跨多端（<code>Windows</code>, <code>Linux</code>, <code>MacOS</code>, <code>Android</code>, <code>ios</code>）的聊天室应用</p>
+</blockquote>
+<pre><code> ________   ________   ________   _________   ___   ________    _________   ________     
+|\   __  \ |\   __  \ |\   ____\ |\___   ___\|\  \ |\   ___  \ |\___   ___\|\   __  \    
+\ \  \|\  \\ \  \|\  \\ \  \___|_\|___ \  \_|\ \  \\ \  \\ \  \\|___ \  \_|\ \  \|\  \   
+ \ \   ____\\ \  \\\  \\ \_____  \    \ \  \  \ \  \\ \  \\ \  \    \ \  \  \ \  \\\  \  
+  \ \  \___| \ \  \\\  \\|____|\  \    \ \  \  \ \  \\ \  \\ \  \    \ \  \  \ \  \\\  \ 
+   \ \__\     \ \_______\ ____\_\  \    \ \__\  \ \__\\ \__\\ \__\    \ \__\  \ \_______\
+    \|__|      \|_______||\_________\    \|__|   \|__| \|__| \|__|     \|__|   \|_______|
+                         \|_________|                                                    
+</code></pre>
+<p><img src="img/conver.jpg" alt="交互逻辑图"></p>
+<p>​																																<em><code>交互逻辑图</code></em></p>
+<h3>
+<a id="服务端部分" class="anchor" href="#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%83%A8%E5%88%86" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>服务端部分</h3>
+<blockquote>
+<p>服务端程序采用 <code>Go</code> 编写，将其部署在云服务器(<code>CentOS</code>)上，使用 <code>Screen</code> 来实现后台运行.</p>
+<p>提供的服务：</p>
+<ul>
+<li>响应用户的登录、注册、创建房间、发送聊天消息等操作（数据库的CRUD、资源互斥访问）</li>
+<li>发送/接收/处理UDP报文</li>
+</ul>
+</blockquote>
+<h3>
+<a id="ui部分" class="anchor" href="#ui%E9%83%A8%E5%88%86" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>UI部分</h3>
+<blockquote>
+<p>UI部分主要采用<code>Qml</code>编写，使用了 <code>Felgo</code> 框架来对移动端做进一步的支持，小部分的 <code>C++</code> 实现报文发送以及处理逻辑</p>
+</blockquote>
+<h2>
+<a id="进一步了解" class="anchor" href="#%E8%BF%9B%E4%B8%80%E6%AD%A5%E4%BA%86%E8%A7%A3" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>进一步了解</h2>
+<ul>
+<li><a href="group-21-App.pptx">项目详细说明</a></li>
+<li><a href="Notes/codesimple.md">代码规范</a></li>
+<li><a href="Notes/ECS-Config.md">服务端相关配置</a></li>
+<li><a href="Notes/reference.md">参考</a></li>
+</ul>
+<h2>
+<a id="android安装包下载" class="anchor" href="#android%E5%AE%89%E8%A3%85%E5%8C%85%E4%B8%8B%E8%BD%BD" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Android安装包下载</h2>
+<p><a href="https://github.com/PostingMan/PostinTo/releases/tag/v1.2.0-stable">.apk包下载</a></p>
+      </section>
+    </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/PostingMan">PostingMan</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
