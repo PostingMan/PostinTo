@@ -61,3 +61,8 @@
 
 [.apk包下载](https://github.com/PostingMan/PostinTo/releases/tag/v1.2.0-stable)
 
+
+
+## FAQ
+
+- [客户端软件无法登录？](Notes/FAQ.md)

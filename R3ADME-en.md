@@ -63,3 +63,8 @@ English | [简体中文](README.md)
 
 [.apk包下载(Download)](https://github.com/PostingMan/PostinTo/releases/tag/v1.2.0-stable)
 
+
+
+## FAQ
+
+- [cant login ?](Notes/FAQ.md)
