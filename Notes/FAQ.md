@@ -20,6 +20,6 @@
   
 - 其中，`MYSQL` 数据库中至少这张表：
 
-  ![table](..\img\yiban.png)
+  ![table](../img/yiban.png)
 
 - 若为云服务器，请确保配置了 `UDP` 安全组，即您的服务器（`PC`）能够接收外网发来的数据报
