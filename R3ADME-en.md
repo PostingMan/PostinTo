@@ -1,5 +1,6 @@
 #                             PostinTo 
-
+> This project is inherited from[LCBHSStudent](https://github.com/LCBHSStudent)'s[Go_QML_UDP-chat-room-demo](https://github.com/LCBHSStudent/Go_QML_UDP-chat-room-demo)
+> Thank him for his generosity
 <img src="img/intro.png" alt="intro" style="zoom:67%;" />
 
 
