@@ -1,4 +1,6 @@
 #                             PostinTo 
+> 本项目继承自[LCBHSStudent](https://github.com/LCBHSStudent)的[Go_QML_UDP-chat-room-demo](https://github.com/LCBHSStudent/Go_QML_UDP-chat-room-demo)
+> 感谢大佬的慷慨！
 
 <img src="img/intro.png" alt="intro" style="zoom:67%;" />
 
